@@ -1,0 +1,168 @@
+digraph TopLevel {
+    label = "TopLevel"
+    compound = true
+    fontname = Arial
+    fontsize = 8
+    bgcolor = lightcyan1
+    node [
+        color = black,
+        fontname = Arial,
+        fontsize = 8
+    ]
+
+    Qt__Widget [
+        URL = "classes/Qt/Widget.html",
+        label = "Qt::Widget"
+    ]
+
+    Qt__Widget -> OpenMirror__SimulationGui [
+
+    ]
+
+    Qt__Widget -> OpenMirror__GlobalGui [
+
+    ]
+
+    Qt__Dialog [
+        URL = "classes/Qt/Dialog.html",
+        label = "Qt::Dialog"
+    ]
+
+    Qt__Dialog -> OpenMirror__CustomDialog [
+
+    ]
+
+    Qt__Frame [
+        URL = "classes/Qt/Frame.html",
+        label = "Qt::Frame"
+    ]
+
+    Qt__Frame -> OpenMirror__PopupGui [
+
+    ]
+
+    Qt__Widget -> OpenMirror__ConfigurationGui [
+
+    ]
+
+    Qt__Widget -> OpenMirror__WebAppGui [
+
+    ]
+
+    subgraph cluster_OpenMirror {
+        label = "OpenMirror"
+        fillcolor = palegreen1
+        URL = "classes/OpenMirror.html"
+        color = blue
+        fontname = Arial
+        style = filled
+        OpenMirror [
+            shape = plaintext,
+            height = 0.01,
+            width = 0.01,
+            label = ""
+        ]
+
+        OpenMirror__Mirror [
+            fontcolor = black,
+            shape = ellipse,
+            URL = "classes/OpenMirror/Mirror.html",
+            color = palegoldenrod,
+            style = filled,
+            label = "Mirror"
+        ]
+
+        OpenMirror__Action [
+            fontcolor = black,
+            shape = ellipse,
+            URL = "classes/OpenMirror/Action.html",
+            color = palegoldenrod,
+            style = filled,
+            label = "Action"
+        ]
+
+        OpenMirror__SimulationGui [
+            fontcolor = black,
+            shape = ellipse,
+            URL = "classes/OpenMirror/SimulationGui.html",
+            color = palegoldenrod,
+            style = filled,
+            label = "SimulationGui"
+        ]
+
+        OpenMirror__GlobalGui [
+            fontcolor = black,
+            shape = ellipse,
+            URL = "classes/OpenMirror/GlobalGui.html",
+            color = palegoldenrod,
+            style = filled,
+            label = "GlobalGui"
+        ]
+
+        OpenMirror__CustomDialog [
+            fontcolor = black,
+            shape = ellipse,
+            URL = "classes/OpenMirror/CustomDialog.html",
+            color = palegoldenrod,
+            style = filled,
+            label = "CustomDialog"
+        ]
+
+        OpenMirror__Tag [
+            fontcolor = black,
+            shape = ellipse,
+            URL = "classes/OpenMirror/Tag.html",
+            color = palegoldenrod,
+            style = filled,
+            label = "Tag"
+        ]
+
+        OpenMirror__PopupGui [
+            fontcolor = black,
+            shape = ellipse,
+            URL = "classes/OpenMirror/PopupGui.html",
+            color = palegoldenrod,
+            style = filled,
+            label = "PopupGui"
+        ]
+
+        OpenMirror__ConfigurationGui [
+            fontcolor = black,
+            shape = ellipse,
+            URL = "classes/OpenMirror/ConfigurationGui.html",
+            color = palegoldenrod,
+            style = filled,
+            label = "ConfigurationGui"
+        ]
+
+        OpenMirror__WebAppGui [
+            fontcolor = black,
+            shape = ellipse,
+            URL = "classes/OpenMirror/WebAppGui.html",
+            color = palegoldenrod,
+            style = filled,
+            label = "WebAppGui"
+        ]
+
+        OpenMirror__Event [
+            fontcolor = black,
+            shape = ellipse,
+            URL = "classes/OpenMirror/Event.html",
+            color = palegoldenrod,
+            style = filled,
+            label = "Event"
+        ]
+
+    }
+
+    Array [
+        fontcolor = black,
+        shape = ellipse,
+        URL = "classes/Array.html",
+        color = palegoldenrod,
+        style = filled,
+        label = "Array"
+    ]
+
+}
+

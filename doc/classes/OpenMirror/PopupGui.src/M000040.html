@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>show (OpenMirror::PopupGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/PopupGui.rb, line 130</span>
+130:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
+131:       <span class="ruby-keyword kw">super</span>
+132:       
+133:       <span class="ruby-comment cmt">#Déplacer le cadre en bas à droite</span>
+134:       <span class="ruby-identifier">move</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Application</span>.<span class="ruby-identifier">desktop</span>().<span class="ruby-identifier">width</span>() <span class="ruby-operator">-</span> <span class="ruby-identifier">width</span>() <span class="ruby-operator">-</span> <span class="ruby-constant">RIGHT_MARGIN</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Application</span>.<span class="ruby-identifier">desktop</span>().<span class="ruby-identifier">height</span>() <span class="ruby-operator">-</span> <span class="ruby-identifier">height</span>() <span class="ruby-operator">-</span> <span class="ruby-constant">BOTTOM_MARGIN</span>)
+135:       
+136:       <span class="ruby-comment cmt">#Démarrer un timer de fermeture automatique</span>
+137:       <span class="ruby-identifier">timer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Timer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+138:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@alone</span> <span class="ruby-keyword kw">then</span>
+139:         <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Object</span>.<span class="ruby-identifier">connect</span>(<span class="ruby-identifier">timer</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'timeout()'</span>), <span class="ruby-ivar">@@qApp</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'quit()'</span>))
+140:       <span class="ruby-keyword kw">else</span>
+141:         <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Object</span>.<span class="ruby-identifier">connect</span>(<span class="ruby-identifier">timer</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'timeout()'</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'hide()'</span>))
+142:       <span class="ruby-keyword kw">end</span>
+143:       <span class="ruby-identifier">timer</span>.<span class="ruby-identifier">start</span>(<span class="ruby-ivar">@closeDelay</span>)
+144:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

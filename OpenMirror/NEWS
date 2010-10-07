@@ -1,0 +1,26 @@
+OpenMirror 2010-07-23 Release
+=============================
+
+== Lib
+  * Lectures des ID des tags RFID, via usb.
+    - possibilité de lire sur plusieurs mir:rors en même temps.
+  * Exécution d'actions systèmes déclenchées par des lectures de tags.
+  * Exécution de requêtes HTTP déclenchées par des lectures de tags.
+  * Configuration des actions déclenchées en fonction des tags lus.
+
+== Driver
+  * Automatisation des processus de lecture, de comparaison, et d'exécution d'actions pré-configurées.
+
+== Tools
+  * Outil de lecture des tags déposés sur le lecture RFID (mir:ror)
+
+== Gui
+  * Interface graphique de notification (Popup)
+  * Interface graphique de simulation des lectures sur le mir:ror, dans le cas ou le mirror ne serait pas reconnu.
+  * Interface graphique de configuration des actions et des événements.
+  * Interface graphique de vue sur une application web distante. (par exemple service web, restfull, lié au tags RFID)
+  * Interface globale, incluant des interfaces de notification, simulation, configuration et vue web.
+
+== Tests
+  * Fichier de tests, pour chaque classe fournie.
+  * Fichier de tests basés sur des scénarios, validant le comportement dans des situations normales, et anormales.

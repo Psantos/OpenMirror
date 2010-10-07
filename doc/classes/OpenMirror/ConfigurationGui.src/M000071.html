@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>matchAdd (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 767</span>
+767:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">matchAdd</span>()
+768:       <span class="ruby-comment cmt">#Uniquement si une event est séléectionnée</span>
+769:       <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">isItemSelected</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentItem</span>)) <span class="ruby-keyword kw">then</span>
+770:                 
+771:         <span class="ruby-identifier">field</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:COMBOBOX</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">MATCH_ADD_FIELD_TEXT</span>, <span class="ruby-identifier">:values</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">MATCH_FIELDS</span>}).<span class="ruby-identifier">value</span>
+772:         
+773:         <span class="ruby-comment cmt">#Par défaut on réalise des saisies sur des entiers</span>
+774:         <span class="ruby-identifier">inputMode</span> = <span class="ruby-constant">INPUT_MODES</span>[<span class="ruby-identifier">:INTEGER</span>]
+775:                 
+776:         <span class="ruby-identifier">availableInputModes</span> = <span class="ruby-constant">INPUT_MODES</span>.<span class="ruby-identifier">clone</span>
+777:         <span class="ruby-identifier">availableInputModes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:STRING</span>)
+778:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">MATCH_VALUES_CONSTANTS</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">field</span> <span class="ruby-keyword kw">then</span>
+779:           <span class="ruby-identifier">availableInputModes</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:CONSTANTS</span>)
+780:         <span class="ruby-keyword kw">end</span>
+781:    
+782:         <span class="ruby-identifier">inputMode</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:COMBOBOX</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">INPUT_MODE_TEXT</span>, <span class="ruby-identifier">:values</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">availableInputModes</span>.<span class="ruby-identifier">values</span>}).<span class="ruby-identifier">value</span>
+783:         
+784:         <span class="ruby-comment cmt">#Dialogue en fonction du mode choisi</span>
+785:         <span class="ruby-keyword kw">case</span>(<span class="ruby-identifier">inputMode</span>)
+786:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">INPUT_MODES</span>[<span class="ruby-identifier">:CONSTANTS</span>])
+787:             <span class="ruby-identifier">value</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:COMBOBOX</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">MATCH_ADD_VALUE_TEXT</span>, <span class="ruby-identifier">:values</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">MATCH_VALUES_CONSTANTS</span>[<span class="ruby-identifier">field</span>]}).<span class="ruby-identifier">value</span>
+788:             
+789:             <span class="ruby-comment cmt"># Adaptation de la valeur de retour</span>
+790:             <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+791:               <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">field</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'COMMAND'</span>) <span class="ruby-keyword kw">then</span>
+792:                 <span class="ruby-identifier">value</span> = <span class="ruby-constant">Tag</span><span class="ruby-operator">::</span><span class="ruby-constant">COMMAND</span>[<span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_sym</span>]
+793:               <span class="ruby-keyword kw">else</span>
+794:                 <span class="ruby-identifier">value</span> = <span class="ruby-constant">Tag</span><span class="ruby-operator">::</span><span class="ruby-constant">ACTION</span>[<span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_sym</span>]
+795:               <span class="ruby-keyword kw">end</span>  
+796:             <span class="ruby-keyword kw">end</span>
+797:             
+798:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">INPUT_MODES</span>[<span class="ruby-identifier">:REGEX</span>])
+799:             <span class="ruby-identifier">value</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:LINE_EDIT_REGEX</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">MATCH_ADD_VALUE_TEXT</span>}).<span class="ruby-identifier">value</span>
+800: 
+801:             <span class="ruby-comment cmt"># Adaptation de la valeur de retour</span>
+802:             <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+803:               <span class="ruby-identifier">value</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>)
+804:             <span class="ruby-keyword kw">end</span>
+805: 
+806:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">INPUT_MODES</span>[<span class="ruby-identifier">:INTEGER</span>])
+807:             <span class="ruby-identifier">value</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:LINE_EDIT</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">MATCH_ADD_VALUE_TEXT</span>}).<span class="ruby-identifier">value</span>
+808:         <span class="ruby-keyword kw">end</span>
+809:         
+810: 
+811:         <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">field</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span>) <span class="ruby-keyword kw">then</span>
+812:           <span class="ruby-comment cmt">#Création d'un event temporaire</span>
+813:           <span class="ruby-identifier">newMatch</span> = <span class="ruby-constant">Event</span><span class="ruby-operator">::</span><span class="ruby-constant">Match</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">field</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">to_sym</span>,<span class="ruby-identifier">value</span>)
+814: 
+815:           <span class="ruby-comment cmt">#Ajouter à l'event en mémoire</span>
+816:           <span class="ruby-ivar">@@loadedEventsList</span>[<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span>].<span class="ruby-identifier">matches</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">newMatch</span>
+817:           
+818:           <span class="ruby-comment cmt">#Ajouter à la vue</span>
+819:           <span class="ruby-ivar">@eventMatchesList</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidgetItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">newMatch</span>.<span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; \t=&gt; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">newMatch</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span>)))
+820:           
+821:           <span class="ruby-comment cmt">#indiquer que la configuration à été modifiée</span>
+822:           <span class="ruby-identifier">modified</span>(<span class="ruby-keyword kw">true</span>)
+823:         <span class="ruby-keyword kw">end</span>
+824:       <span class="ruby-keyword kw">end</span>
+825:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

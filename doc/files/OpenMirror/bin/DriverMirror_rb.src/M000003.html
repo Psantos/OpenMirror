@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>loadEventsFromConfig (OpenMirror/bin/DriverMirror.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/bin/DriverMirror.rb, line 125</span>
+125: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">loadEventsFromConfig</span>
+126:   <span class="ruby-keyword kw">begin</span>
+127:     
+128:     <span class="ruby-constant">Event</span>.<span class="ruby-identifier">setConfiguration</span>(<span class="ruby-constant">EVENT_CONFIGURATION_FILE</span>)
+129:         
+130:   <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+131:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">OPTIONS</span>[<span class="ruby-value str">&quot;--verbose&quot;</span>] <span class="ruby-keyword kw">then</span>
+132:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+133:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot; Impossible de charger le fichier de configuration                           &quot;</span>
+134:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;   fichier introuvable, ou vous n'avez pas les droits de                     &quot;</span>
+135:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;   lecture sur le fichier. (&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">EVENT_CONFIGURATION_FILE</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;)&quot;</span>
+136:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+137:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+138:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+139:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+140:     <span class="ruby-keyword kw">end</span>
+141:         
+142:     <span class="ruby-comment cmt">#Signaler au programme appellant qu'une erreur à été rencontrée</span>
+143:     <span class="ruby-identifier">exit</span>(<span class="ruby-value">-1</span>)
+144:     
+145:   <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception</span>
+146:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">OPTIONS</span>[<span class="ruby-value str">&quot;--verbose&quot;</span>] <span class="ruby-keyword kw">then</span>
+147:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+148:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot; Erreur : &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">message</span>
+149:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+150:       <span class="ruby-identifier">puts</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>
+151:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+152:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+153:     <span class="ruby-keyword kw">end</span>
+154: 
+155:     <span class="ruby-comment cmt">#Signaler au programme appellant qu'une erreur à été rencontrée</span>
+156:     <span class="ruby-identifier">exit</span>(<span class="ruby-value">-1</span>)
+157:   <span class="ruby-keyword kw">end</span>
+158: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

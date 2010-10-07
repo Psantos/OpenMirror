@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>export (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 604</span>
+604:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">export</span>()
+605:       <span class="ruby-keyword kw">begin</span>
+606:         <span class="ruby-identifier">fname</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">FileDialog</span>.<span class="ruby-identifier">getSaveFileName</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EXPORT_DIALOG_TITLE</span>))
+607:         
+608:         <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">fname</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">fname</span>.<span class="ruby-identifier">empty?</span>) <span class="ruby-keyword kw">then</span>
+609:           <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">fname</span>, <span class="ruby-value str">'w'</span>)
+610:           <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>(<span class="ruby-ivar">@@loadedEventsList</span>.<span class="ruby-identifier">to_yaml</span>)
+611:           <span class="ruby-identifier">file</span>.<span class="ruby-identifier">close</span>
+612:         <span class="ruby-keyword kw">end</span>
+613:            
+614:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EACCES</span>
+615:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+616:         <span class="ruby-identifier">puts</span> <span class="ruby-constant">EXPORT_FILE_ERROR</span>
+617:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+618:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+619:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+620:         
+621:         <span class="ruby-identifier">win</span> = <span class="ruby-constant">OpenMirror</span><span class="ruby-operator">::</span><span class="ruby-constant">PopupGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">EXPORT_FILE_ERROR</span>, <span class="ruby-ivar">@@qApp</span>)
+622:         <span class="ruby-identifier">win</span>.<span class="ruby-identifier">show</span>
+623: 
+624:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception</span>
+625:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+626:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot; Erreur : &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">message</span>
+627:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+628:         <span class="ruby-identifier">puts</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>
+629:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+630:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+631: 
+632:         <span class="ruby-identifier">win</span> = <span class="ruby-constant">OpenMirror</span><span class="ruby-operator">::</span><span class="ruby-constant">PopupGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">EXPORT_SERIOUS_ERROR</span>, <span class="ruby-ivar">@@qApp</span>)
+633:         <span class="ruby-identifier">win</span>.<span class="ruby-identifier">show</span>
+634:       <span class="ruby-keyword kw">end</span>
+635:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

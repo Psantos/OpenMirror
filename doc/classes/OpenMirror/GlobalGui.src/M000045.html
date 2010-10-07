@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (OpenMirror::GlobalGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/GlobalGui.rb, line 77</span>
+ 77:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>, <span class="ruby-identifier">parent</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">eventConfiguration</span> = <span class="ruby-constant">EVENT_CONFIGURATION_FILE</span>, <span class="ruby-identifier">webAppUrl</span> = <span class="ruby-constant">WEB_APPLICATION_URL</span>, <span class="ruby-identifier">color</span> = <span class="ruby-keyword kw">nil</span>)
+ 78:       <span class="ruby-ivar">@@qApp</span> = <span class="ruby-identifier">app</span>
+ 79:       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">parent</span>)
+ 80: 
+ 81:       <span class="ruby-ivar">@@config</span> = <span class="ruby-identifier">eventConfiguration</span>
+ 82:       <span class="ruby-ivar">@@webAppUrl</span> = <span class="ruby-identifier">webAppUrl</span>
+ 83:       
+ 84:       <span class="ruby-comment cmt">#Construction du layout global</span>
+ 85:       <span class="ruby-identifier">globalLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+ 86:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">spacing</span> = <span class="ruby-constant">LAYOUT_SPACING</span>
+ 87:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">margin</span> =  <span class="ruby-constant">GLOBAL_LAYOUT_MARGIN</span>
+ 88:       <span class="ruby-identifier">setStyleSheet</span>(<span class="ruby-node">&quot;background-color: #{color}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">color</span>.<span class="ruby-identifier">nil?</span>
+ 89:       
+ 90:       <span class="ruby-comment cmt">#entête</span>
+ 91:       <span class="ruby-identifier">headerLayout</span>       = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+ 92:       <span class="ruby-identifier">imageHeader</span>        = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">HEADER_IMAGE_FILE_NAME</span>)
+ 93:       <span class="ruby-identifier">headerLabel</span>        = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>
+ 94:       <span class="ruby-identifier">headerSpacerLeft</span>   = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SpacerItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>)
+ 95:       <span class="ruby-identifier">headerSpacerRight</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SpacerItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>)
+ 96:       <span class="ruby-identifier">headerLabel</span>.<span class="ruby-identifier">pixmap</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Pixmap</span>.<span class="ruby-identifier">fromImage</span>(<span class="ruby-identifier">imageHeader</span>)
+ 97:       <span class="ruby-identifier">headerLayout</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-identifier">headerSpacerLeft</span>)
+ 98:       <span class="ruby-identifier">headerLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">headerLabel</span>)
+ 99:       <span class="ruby-identifier">headerLayout</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-identifier">headerSpacerRight</span>)
+100:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">headerLayout</span>)
+101:       
+102:       
+103:       <span class="ruby-comment cmt">#Vue générale</span>
+104:       <span class="ruby-identifier">mainViewWidget</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Widget</span>.<span class="ruby-identifier">new</span>
+105:       <span class="ruby-identifier">mainViewLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+106:       <span class="ruby-identifier">mainViewWidget</span>.<span class="ruby-identifier">setLayout</span>(<span class="ruby-identifier">mainViewLayout</span>)
+107:       
+108:       <span class="ruby-comment cmt">#Construction de la vue principale</span>
+109:       <span class="ruby-identifier">mainLayout</span>   = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+110:       <span class="ruby-identifier">statusLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+111:       <span class="ruby-identifier">statusGroupBox</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">GroupBox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">STATUS_GROUPBOX_TITLE</span>))
+112:       <span class="ruby-identifier">statusGroupBox</span>.<span class="ruby-identifier">layout</span> = <span class="ruby-identifier">statusLayout</span>
+113:       <span class="ruby-identifier">mainViewLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">statusGroupBox</span>)
+114: 
+115:       <span class="ruby-comment cmt">#Affiche le nombre de mirrors connectés</span>
+116:       <span class="ruby-keyword kw">begin</span>
+117:         <span class="ruby-identifier">numMirrors</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">NUM_OF_MIRRORS_LABEL</span> <span class="ruby-operator">+</span> <span class="ruby-constant">Mirror</span>.<span class="ruby-identifier">mirrors</span>.<span class="ruby-identifier">count</span>.<span class="ruby-identifier">to_s</span>))
+118:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">OpenMirror</span><span class="ruby-operator">::</span><span class="ruby-constant">Mirror</span><span class="ruby-operator">::</span><span class="ruby-constant">MirrorError</span>
+119:         <span class="ruby-identifier">numMirrors</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">NUM_OF_MIRRORS_LABEL</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'0'</span>))
+120:       <span class="ruby-keyword kw">end</span>
+121:       <span class="ruby-identifier">statusLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">numMirrors</span>)
+122:       
+123:       <span class="ruby-comment cmt">#Affiche une vue sur une application distante</span>
+124:       <span class="ruby-identifier">webAppLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+125:       <span class="ruby-identifier">webAppGroupBox</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">GroupBox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WEBAPP_GROUPBOX_TITLE</span>))
+126:       <span class="ruby-identifier">webAppGroupBox</span>.<span class="ruby-identifier">layout</span> = <span class="ruby-identifier">webAppLayout</span>
+127:       <span class="ruby-identifier">webAppLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-constant">WebAppGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@@qApp</span>, <span class="ruby-keyword kw">self</span>, <span class="ruby-ivar">@@webAppUrl</span>))
+128:       <span class="ruby-identifier">mainViewLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">webAppGroupBox</span>)
+129:             
+130:       <span class="ruby-comment cmt">#Création des différents tabs</span>
+131:       <span class="ruby-identifier">tabWidget</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">TabWidget</span>.<span class="ruby-identifier">new</span>
+132:       <span class="ruby-identifier">tabWidget</span>.<span class="ruby-identifier">addTab</span>(<span class="ruby-identifier">mainViewWidget</span>,                               <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">GENERAL_TAB_TEXT</span>))
+133:       <span class="ruby-identifier">tabWidget</span>.<span class="ruby-identifier">addTab</span>(<span class="ruby-constant">SimulationGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@@qApp</span>),                    <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">SIMULATION_TAB_TEXT</span>))
+134:       <span class="ruby-identifier">tabWidget</span>.<span class="ruby-identifier">addTab</span>(<span class="ruby-constant">ConfigurationGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@@qApp</span>, <span class="ruby-keyword kw">self</span>, <span class="ruby-ivar">@@config</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">CONFIGURATION_TAB_TEXT</span>))
+135:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">tabWidget</span>)
+136: 
+137:       <span class="ruby-identifier">setLayout</span>(<span class="ruby-identifier">globalLayout</span>)
+138: 
+139:       <span class="ruby-comment cmt">#Redimensionner à une taille spécifique</span>
+140:       <span class="ruby-identifier">resize</span>(<span class="ruby-constant">MIN_WIDTH</span>, <span class="ruby-constant">MIN_HEIGHT</span>)
+141:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

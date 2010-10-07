@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>tagSimulate (OpenMirror::SimulationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/SimulationGui.rb, line 317</span>
+317:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tagSimulate</span>(<span class="ruby-identifier">tag</span>)
+318:         <span class="ruby-comment cmt">#Simuler l'événement</span>
+319:         <span class="ruby-identifier">event</span> = <span class="ruby-constant">Event</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">tag</span>)
+320:   
+321:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+322:           <span class="ruby-identifier">message</span> = <span class="ruby-value str">&quot; * Aucun événement lancé car aucun ne correspond au tag lu.&quot;</span>
+323:           <span class="ruby-identifier">puts</span> <span class="ruby-identifier">message</span>
+324:           <span class="ruby-identifier">win</span> = <span class="ruby-constant">OpenMirror</span><span class="ruby-operator">::</span><span class="ruby-constant">PopupGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">message</span>, <span class="ruby-ivar">@@qApp</span>)
+325:         <span class="ruby-keyword kw">else</span>          
+326:           <span class="ruby-identifier">message</span> = <span class="ruby-value str">&quot;  * Evénement lancé : &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">to_s</span>
+327:           <span class="ruby-identifier">puts</span> <span class="ruby-identifier">message</span>
+328:           <span class="ruby-identifier">win</span> = <span class="ruby-constant">OpenMirror</span><span class="ruby-operator">::</span><span class="ruby-constant">PopupGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">message</span>, <span class="ruby-ivar">@@qApp</span>)
+329:         <span class="ruby-keyword kw">end</span>
+330:         <span class="ruby-identifier">puts</span> <span class="ruby-identifier">win</span>.<span class="ruby-identifier">show</span>
+331:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">to_s</span>
+332:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

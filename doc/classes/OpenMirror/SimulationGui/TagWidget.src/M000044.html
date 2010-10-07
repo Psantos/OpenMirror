@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>tagOFF (OpenMirror::SimulationGui::TagWidget)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/SimulationGui.rb, line 191</span>
+191:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tagOFF</span>()        
+192:         <span class="ruby-comment cmt">#Créer nouvelle instance de Tag, et simuler un événement</span>
+193:         <span class="ruby-identifier">tagSimul</span> = <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Tag</span><span class="ruby-operator">::</span><span class="ruby-constant">COMMAND</span>[<span class="ruby-identifier">:COMMAND_READ</span>], <span class="ruby-constant">Tag</span><span class="ruby-operator">::</span><span class="ruby-constant">ACTION</span>[<span class="ruby-identifier">:ACTION_TAG_OFF</span>], <span class="ruby-ivar">@tag</span>.<span class="ruby-identifier">id</span>, <span class="ruby-ivar">@tag</span>.<span class="ruby-identifier">data</span>)
+194:         
+195:         <span class="ruby-comment cmt">#Simuler l'événement</span>
+196:         <span class="ruby-identifier">evenName</span> = <span class="ruby-constant">SimulationGui</span><span class="ruby-operator">::</span><span class="ruby-identifier">tagSimulate</span>(<span class="ruby-identifier">tagSimul</span>)
+197:         
+198:         <span class="ruby-comment cmt">#Message de log</span>
+199:         <span class="ruby-constant">SimulationGui</span><span class="ruby-operator">::</span><span class="ruby-identifier">appendMessage</span>(<span class="ruby-constant">TAG_ON_MESSAGE</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n\tid =&gt; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@tag</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n\tevent =&gt; &quot;</span> <span class="ruby-operator">+</span>  <span class="ruby-identifier">evenName</span>)
+200:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

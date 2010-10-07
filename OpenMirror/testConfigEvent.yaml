@@ -1,0 +1,56 @@
+--- 
+- !ruby/object:OpenMirror::Event 
+  actions: 
+  - !ruby/object:OpenMirror::Action::Execute 
+    command: tar cvjf ./`date +"%d-%m-%Y_%Hh%Mm"`.tar ./
+  matches: 
+  - !ruby/object:OpenMirror::Event::Match 
+    field: :action
+    value: "01"
+  name: Backup du projet courant
+- !ruby/object:OpenMirror::Event 
+  actions: 
+  - !ruby/object:OpenMirror::Action::HTTP_URL 
+    data: ""
+    headers: {}
+
+    method: :GET
+    params: {}
+
+    url: !ruby/object:URI::HTTP 
+      fragment: 
+      host: 10.192.78.2
+      opaque: 
+      password: 
+      path: /badging/@(id)
+      port: 80
+      query: 
+      registry: 
+      scheme: http
+      user: 
+  matches: 
+  - !ruby/object:OpenMirror::Event::Match 
+    field: :action
+    value: "01"
+  - !ruby/object:OpenMirror::Event::Match 
+    field: :id
+    value: 00000839284199288282
+  name: Badger projet XYZ
+- !ruby/object:OpenMirror::Event 
+  actions: []
+
+  matches: []
+
+  name: SVN checkout
+- !ruby/object:OpenMirror::Event 
+  actions: []
+
+  matches: []
+
+  name: GIT commit
+- !ruby/object:OpenMirror::Event 
+  actions: []
+
+  matches: []
+
+  name: "Envoyer mail de r\xE9clamation au RSSI"

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 239</span>
+239:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>, <span class="ruby-identifier">parent</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">configuration</span> = <span class="ruby-constant">EVENT_CONFIGURATION_FILE</span>, <span class="ruby-identifier">color</span> = <span class="ruby-keyword kw">nil</span>)
+240:       <span class="ruby-ivar">@@qApp</span> = <span class="ruby-identifier">app</span>
+241:       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">parent</span>)
+242:       
+243:       <span class="ruby-comment cmt">#Fichier source de la configuration</span>
+244:       <span class="ruby-ivar">@@configurationFile</span> = <span class="ruby-identifier">configuration</span>
+245:       
+246:       <span class="ruby-comment cmt">#Définir le titre de la fenetêtre</span>
+247:       <span class="ruby-identifier">setWindowTitle</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>))
+248:       
+249:       <span class="ruby-comment cmt">#Redimensionner à une taille spécifique</span>
+250:       <span class="ruby-identifier">resize</span>(<span class="ruby-constant">MIN_WIDTH</span>, <span class="ruby-constant">MIN_HEIGHT</span>)
+251:       
+252:       <span class="ruby-comment cmt">#Charger la configuration depuis le fichier</span>
+253:       <span class="ruby-comment cmt">#Création des icones</span>
+254:       <span class="ruby-identifier">actionAddIcon</span>     = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Icon</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ADD_ICON</span>)
+255:       <span class="ruby-identifier">actionEditIcon</span>    = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Icon</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">EDIT_ICON</span>)
+256:       <span class="ruby-identifier">actionRemoveIcon</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Icon</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">REMOVE_ICON</span>)
+257:       <span class="ruby-identifier">actionUpIcon</span>      = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Icon</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">UP_ICON</span>)
+258:       <span class="ruby-identifier">actionDownIcon</span>    = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Icon</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">DOWN_ICON</span>)
+259:       
+260:       <span class="ruby-comment cmt">#Construction du layout global</span>
+261:       <span class="ruby-identifier">globalLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+262:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">spacing</span> = <span class="ruby-constant">LAYOUT_SPACING</span>
+263:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">margin</span> = <span class="ruby-constant">GLOBAL_LAYOUT_MARGIN</span>
+264:       <span class="ruby-identifier">setStyleSheet</span>(<span class="ruby-node">&quot;background-color: #{color}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">color</span>.<span class="ruby-identifier">nil?</span>
+265:       <span class="ruby-identifier">setLayout</span>(<span class="ruby-identifier">globalLayout</span>)      
+266:       
+267:       <span class="ruby-comment cmt">#Construction du layout gauche</span>
+268:       <span class="ruby-identifier">leftLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>      
+269:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">leftLayout</span>)
+270:       
+271:       <span class="ruby-comment cmt">#Construction du layout droit</span>
+272:       <span class="ruby-identifier">rightLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+273:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">rightLayout</span>)
+274:       
+275:       <span class="ruby-comment cmt">#Construction de la vue gauche, liste des evenements</span>
+276:       <span class="ruby-identifier">eventListInternLayout</span>    = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+277:       <span class="ruby-identifier">eventListGroupBox</span>        = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">GroupBox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">LABEL_EVENT</span>))
+278:       <span class="ruby-identifier">eventListGroupBox</span>.<span class="ruby-identifier">layout</span> = <span class="ruby-identifier">eventListInternLayout</span>
+279:                  
+280:       <span class="ruby-identifier">eventListActionsLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+281:       <span class="ruby-identifier">eventListInternLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">eventListActionsLayout</span>)
+282:       <span class="ruby-identifier">leftLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">eventListGroupBox</span>)
+283:       
+284:       <span class="ruby-ivar">@eventList</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidget</span>.<span class="ruby-identifier">new</span>
+285:       <span class="ruby-identifier">eventListInternLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-ivar">@eventList</span>)
+286:       
+287:       <span class="ruby-identifier">eventAddButton</span>    = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionAddIcon</span>, <span class="ruby-value str">''</span>)
+288:       <span class="ruby-identifier">eventRemoveButton</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionRemoveIcon</span>, <span class="ruby-value str">''</span>)
+289:       <span class="ruby-identifier">eventUpButton</span>     = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionUpIcon</span>, <span class="ruby-value str">''</span>)
+290:       <span class="ruby-identifier">eventDownButton</span>   = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionDownIcon</span>, <span class="ruby-value str">''</span>)
+291:       
+292:       <span class="ruby-identifier">eventAddButton</span>.<span class="ruby-identifier">toolTip</span>    = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EVENT_ADD_BUTTON_TT</span>)
+293:       <span class="ruby-identifier">eventRemoveButton</span>.<span class="ruby-identifier">toolTip</span> = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EVENT_REMOVE_BUTTON_TT</span>)
+294:       <span class="ruby-identifier">eventUpButton</span>.<span class="ruby-identifier">toolTip</span>     = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EVENT_UP_BUTTON_TT</span>)
+295:       <span class="ruby-identifier">eventDownButton</span>.<span class="ruby-identifier">toolTip</span>   = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EVENT_DOWN_BUTTON_TT</span>)
+296:         
+297:       <span class="ruby-identifier">eventListActionsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">eventAddButton</span>)
+298:       <span class="ruby-identifier">eventListActionsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">eventRemoveButton</span>)
+299:       <span class="ruby-identifier">eventListActionsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">eventUpButton</span>)
+300:       <span class="ruby-identifier">eventListActionsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">eventDownButton</span>)
+301:       
+302:       <span class="ruby-comment cmt">#Construction de la vue droite (details et actions)</span>
+303:       <span class="ruby-identifier">eventNameLayout</span>           = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+304:       <span class="ruby-identifier">eventMatchesLayout</span>        = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+305:       <span class="ruby-identifier">eventMatchesInternLayout</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+306:       <span class="ruby-identifier">eventMatchesButtonsLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+307:       <span class="ruby-identifier">eventActionsLayout</span>        = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+308:       <span class="ruby-identifier">eventActionsInternLayout</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+309:       <span class="ruby-identifier">eventActionsButtonsLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+310:       
+311:       <span class="ruby-comment cmt">#--Nom de l'évenement</span>
+312:       <span class="ruby-identifier">eventNameTitleLabel</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">LABEL_NAME</span>))
+313:       <span class="ruby-identifier">eventNameSpacerRight</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SpacerItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">20</span>, <span class="ruby-value">40</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>)
+314:       <span class="ruby-identifier">eventNameEditButton</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionEditIcon</span>, <span class="ruby-value str">''</span>)
+315:       <span class="ruby-identifier">eventNameEditButton</span>.<span class="ruby-identifier">toolTip</span> = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EVENT_NAME_EDIT</span>)
+316:       
+317:       <span class="ruby-ivar">@eventNameLabel</span>      = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>
+318:       
+319:       <span class="ruby-identifier">eventNameLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">eventNameTitleLabel</span>)
+320:       <span class="ruby-identifier">eventNameLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-ivar">@eventNameLabel</span>)
+321:       <span class="ruby-identifier">eventNameLayout</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-identifier">eventNameSpacerRight</span>)
+322:       <span class="ruby-identifier">eventNameLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">eventNameEditButton</span>)
+323:       <span class="ruby-identifier">rightLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">eventNameLayout</span>)
+324:       
+325:       <span class="ruby-comment cmt">#--Matches</span>
+326:       <span class="ruby-identifier">eventMatchesGroupBox</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">GroupBox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">LABEL_MATCHES</span>))
+327:       <span class="ruby-ivar">@eventMatchesList</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidget</span>.<span class="ruby-identifier">new</span>
+328:       <span class="ruby-identifier">eventMatchesLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">eventMatchesGroupBox</span>)
+329:       <span class="ruby-identifier">eventMatchesGroupBox</span>.<span class="ruby-identifier">layout</span> = <span class="ruby-identifier">eventMatchesInternLayout</span>
+330:       <span class="ruby-identifier">eventMatchesInternLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-ivar">@eventMatchesList</span>)
+331:       <span class="ruby-identifier">eventMatchesInternLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">eventMatchesButtonsLayout</span>)
+332:       
+333:       <span class="ruby-identifier">matchesAddButton</span>    = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionAddIcon</span>, <span class="ruby-value str">''</span>)
+334:       <span class="ruby-identifier">matchesEditButton</span>   = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionEditIcon</span>, <span class="ruby-value str">''</span>)
+335:       <span class="ruby-identifier">matchesRemoveButton</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionRemoveIcon</span>, <span class="ruby-value str">''</span>)
+336:         
+337:       <span class="ruby-identifier">matchesAddButton</span>.<span class="ruby-identifier">toolTip</span>    = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">MATCHES_ADD_BUTTON_TT</span>)
+338:       <span class="ruby-identifier">matchesEditButton</span>.<span class="ruby-identifier">toolTip</span>   = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">MATCHES_EDIT_BUTTON_TT</span>)
+339:       <span class="ruby-identifier">matchesRemoveButton</span>.<span class="ruby-identifier">toolTip</span> = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">MATCHES_REMOVE_BUTTON_TT</span>)
+340:         
+341:       <span class="ruby-identifier">eventMatchesButtonsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">matchesAddButton</span>)
+342:       <span class="ruby-identifier">eventMatchesButtonsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">matchesEditButton</span>)
+343:       <span class="ruby-identifier">eventMatchesButtonsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">matchesRemoveButton</span>)
+344:       <span class="ruby-identifier">rightLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">eventMatchesLayout</span>)
+345:       
+346:       <span class="ruby-comment cmt">#--Actions</span>
+347:       <span class="ruby-identifier">eventActionsGroupBox</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">GroupBox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">LABEL_ACTIONS</span>))
+348:       <span class="ruby-ivar">@eventActionsList</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidget</span>.<span class="ruby-identifier">new</span>
+349:       <span class="ruby-identifier">eventActionsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">eventActionsGroupBox</span>)
+350:       <span class="ruby-identifier">eventActionsGroupBox</span>.<span class="ruby-identifier">layout</span> = <span class="ruby-identifier">eventActionsInternLayout</span>
+351:       <span class="ruby-identifier">eventActionsInternLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-ivar">@eventActionsList</span>)
+352:       <span class="ruby-identifier">eventActionsInternLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">eventActionsButtonsLayout</span>)
+353:       
+354:       <span class="ruby-identifier">actionsAddButton</span>    = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionAddIcon</span>, <span class="ruby-value str">''</span>)
+355:       <span class="ruby-identifier">actionsEditButton</span>   = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionEditIcon</span>, <span class="ruby-value str">''</span>)
+356:       <span class="ruby-identifier">actionsRemoveButton</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">actionRemoveIcon</span>, <span class="ruby-value str">''</span>)
+357:       
+358:       <span class="ruby-identifier">actionsAddButton</span>.<span class="ruby-identifier">toolTip</span>    = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ACTIONS_ADD_BUTTON_TT</span>)
+359:       <span class="ruby-identifier">actionsEditButton</span>.<span class="ruby-identifier">toolTip</span>   = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ACTIONS_EDIT_BUTTON_TT</span>)
+360:       <span class="ruby-identifier">actionsRemoveButton</span>.<span class="ruby-identifier">toolTip</span> = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ACTIONS_REMOVE_BUTTON_TT</span>)
+361:       
+362:       <span class="ruby-identifier">eventActionsButtonsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">actionsAddButton</span>)
+363:       <span class="ruby-identifier">eventActionsButtonsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">actionsEditButton</span>)
+364:       <span class="ruby-identifier">eventActionsButtonsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">actionsRemoveButton</span>)
+365:       <span class="ruby-identifier">rightLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">eventActionsLayout</span>)
+366:            
+367:       <span class="ruby-comment cmt">#Création des menus</span>
+368:       <span class="ruby-identifier">menuBar</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MenuBar</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)      
+369:       <span class="ruby-identifier">fileMenu</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Menu</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">FILE_MENU</span>))
+370:       <span class="ruby-identifier">helpMenu</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Menu</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">HELP_MENU</span>))
+371:       
+372:       <span class="ruby-identifier">menuBar</span>.<span class="ruby-identifier">addMenu</span>(<span class="ruby-identifier">fileMenu</span>)
+373:       <span class="ruby-identifier">menuBar</span>.<span class="ruby-identifier">addMenu</span>(<span class="ruby-identifier">helpMenu</span>)
+374:       
+375:       <span class="ruby-comment cmt">#--Création des actions      </span>
+376:       <span class="ruby-identifier">newAction</span>             = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Action</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">NEW_CONFIG_ACTION</span>), <span class="ruby-keyword kw">self</span>)
+377:       <span class="ruby-identifier">newAction</span>.<span class="ruby-identifier">shortcut</span>    = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">KeySequence</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">NEW_CONFIG_SHORTCUT</span>))
+378:       
+379:       <span class="ruby-identifier">saveAction</span>            = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Action</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">SAVE_CONFIG_ACTION</span>), <span class="ruby-keyword kw">self</span>)
+380:       <span class="ruby-identifier">saveAction</span>.<span class="ruby-identifier">shortcut</span>   = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">KeySequence</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">SAVE_CONFIG_SHORTCUT</span>))
+381:       
+382:       <span class="ruby-identifier">importAction</span>          = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Action</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">IMPORT_CONFIG_ACTION</span>), <span class="ruby-keyword kw">self</span>)
+383:       <span class="ruby-identifier">importAction</span>.<span class="ruby-identifier">shortcut</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">KeySequence</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">IMPORT_CONFIG_SHORTCUT</span>))
+384:       
+385:       <span class="ruby-identifier">exportAction</span>          = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Action</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EXPORT_CONFIG_ACTION</span>), <span class="ruby-keyword kw">self</span>)
+386:       <span class="ruby-identifier">exportAction</span>.<span class="ruby-identifier">shortcut</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">KeySequence</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EXPORT_CONFIG_SHORTCUT</span>))
+387:       
+388:       <span class="ruby-identifier">quitAction</span>            = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Action</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">QUIT_ACTION</span>), <span class="ruby-keyword kw">self</span>)
+389:       <span class="ruby-identifier">quitAction</span>.<span class="ruby-identifier">shortcut</span>   = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">KeySequence</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">QUIT_CONFIG_SHORTCUT</span>))
+390:       
+391:       <span class="ruby-identifier">configHelpAction</span>      = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Action</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">HELP_ACTION</span>), <span class="ruby-keyword kw">self</span>)
+392:       <span class="ruby-identifier">openMirrorAboutAction</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Action</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ABOUT_OPEN_MIRROR_ACTION</span>), <span class="ruby-keyword kw">self</span>)
+393:       <span class="ruby-identifier">qtAboutAction</span>         = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Action</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ABOUT_QT_ACTION</span>), <span class="ruby-keyword kw">self</span>)
+394:             
+395:       <span class="ruby-comment cmt">#--Ajout des actions aux menus</span>
+396:       <span class="ruby-identifier">fileMenu</span>.<span class="ruby-identifier">addAction</span>(<span class="ruby-identifier">newAction</span>)
+397:       <span class="ruby-identifier">fileMenu</span>.<span class="ruby-identifier">addAction</span>(<span class="ruby-identifier">saveAction</span>)
+398:       <span class="ruby-identifier">fileMenu</span>.<span class="ruby-identifier">addAction</span>(<span class="ruby-identifier">importAction</span>)
+399:       <span class="ruby-identifier">fileMenu</span>.<span class="ruby-identifier">addAction</span>(<span class="ruby-identifier">exportAction</span>)
+400:       <span class="ruby-identifier">fileMenu</span>.<span class="ruby-identifier">addAction</span>(<span class="ruby-identifier">quitAction</span>)
+401:       
+402:       <span class="ruby-identifier">helpMenu</span>.<span class="ruby-identifier">addAction</span>(<span class="ruby-identifier">configHelpAction</span>)
+403:       <span class="ruby-identifier">helpMenu</span>.<span class="ruby-identifier">addAction</span>(<span class="ruby-identifier">openMirrorAboutAction</span>)
+404:       <span class="ruby-identifier">helpMenu</span>.<span class="ruby-identifier">addAction</span>(<span class="ruby-identifier">qtAboutAction</span>)
+405: 
+406:       <span class="ruby-comment cmt">#Chargement de la configuration par défaut</span>
+407:       <span class="ruby-identifier">loadEventsFromConfig</span>(<span class="ruby-ivar">@@configurationFile</span>)
+408:       <span class="ruby-identifier">modified</span>(<span class="ruby-keyword kw">false</span>)
+409:               
+410:       <span class="ruby-comment cmt">#Connexions des widgets graphiques</span>
+411:       <span class="ruby-identifier">connect</span>(<span class="ruby-ivar">@eventList</span>,               <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'itemActivated(QListWidgetItem*)'</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'showDetails(QListWidgetItem*)'</span>))    
+412:       
+413:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">newAction</span>,                <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'triggered()'</span>),  <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'newFile()'</span>))
+414:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">saveAction</span>,               <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'triggered()'</span>),  <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'save()'</span>))
+415:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">exportAction</span>,             <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'triggered()'</span>),  <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'export()'</span>))
+416:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">importAction</span>,             <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'triggered()'</span>),  <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'import()'</span>))
+417:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">quitAction</span>,               <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'triggered()'</span>),  <span class="ruby-ivar">@@qApp</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'quit()'</span>))
+418:       
+419:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">qtAboutAction</span>,            <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'triggered()'</span>),  <span class="ruby-ivar">@@qApp</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'aboutQt()'</span>))
+420:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">openMirrorAboutAction</span>,    <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'triggered()'</span>),  <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'showAboutOpenMirror()'</span>))
+421:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">configHelpAction</span>,         <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'triggered()'</span>),  <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'showHelpOpenMirror()'</span>))
+422:             
+423:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">eventNameEditButton</span>,      <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'editEventName()'</span>))
+424:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">eventUpButton</span>,            <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'moveEventUp()'</span>))
+425:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">eventDownButton</span>,          <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'moveEventDown()'</span>))
+426:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">eventRemoveButton</span>,        <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'eventRemove()'</span>))
+427:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">eventAddButton</span>,           <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'eventAdd()'</span>))
+428: 
+429:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">matchesAddButton</span>,         <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'matchAdd()'</span>))
+430:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">matchesRemoveButton</span>,      <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'matchRemove()'</span>))
+431:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">matchesEditButton</span>,        <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'matchEdit()'</span>))
+432: 
+433:       
+434:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">actionsAddButton</span>,         <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'actionAdd()'</span>))
+435:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">actionsRemoveButton</span>,      <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'actionRemove()'</span>))
+436:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">actionsEditButton</span>,        <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>),    <span class="ruby-keyword kw">self</span>,   <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'actionEdit()'</span>))
+437:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

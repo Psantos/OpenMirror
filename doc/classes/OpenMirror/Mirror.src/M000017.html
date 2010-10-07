@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>open (OpenMirror::Mirror)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File OpenMirror/lib/Mirror.rb, line 82</span>
+82:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open</span>
+83:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@opened</span> <span class="ruby-keyword kw">then</span>
+84:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+85:       <span class="ruby-keyword kw">else</span>
+86:         <span class="ruby-comment cmt"># Réclamer l'interface</span>
+87:         <span class="ruby-identifier">claimInterface</span>
+88:         <span class="ruby-ivar">@opened</span> = <span class="ruby-keyword kw">true</span>
+89:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+90:       <span class="ruby-keyword kw">end</span>
+91:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>run (OpenMirror::Action::HTTP_URL)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/lib/Action.rb, line 148</span>
+148:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">tag</span>)
+149:         <span class="ruby-keyword kw">begin</span>
+150:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">request_uri</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">then</span>
+151:             <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">request_uri</span> = <span class="ruby-value str">&quot;/&quot;</span>
+152:           <span class="ruby-keyword kw">end</span>
+153:           
+154:           <span class="ruby-comment cmt">#Remplacer les patterns par les valeurs du tag responsable de l'action</span>
+155:           <span class="ruby-identifier">url_request_uri</span>       = <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">request_uri</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_ID</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">id</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_DATA</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">data</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_COMMAND</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">command</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_ACTION</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">action</span>)
+156:           <span class="ruby-identifier">data</span>                  = <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_ID</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">id</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_DATA</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">data</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_COMMAND</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">command</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_ACTION</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">action</span>)
+157:                   
+158:           <span class="ruby-keyword kw">case</span>(<span class="ruby-ivar">@method</span>) 
+159:             <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:GET</span> <span class="ruby-keyword kw">then</span>
+160:               <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Get</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">url_request_uri</span>, <span class="ruby-ivar">@headers</span>)
+161:               <span class="ruby-identifier">response</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@url</span>.<span class="ruby-identifier">host</span>, <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">port</span>).<span class="ruby-identifier">start</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">http</span><span class="ruby-operator">|</span> <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>) }
+162:               <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+163:               
+164:             <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:HEAD</span> <span class="ruby-keyword kw">then</span>
+165:               <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Head</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">url_request_uri</span>, <span class="ruby-ivar">@headers</span>)
+166:               <span class="ruby-identifier">response</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@url</span>.<span class="ruby-identifier">host</span>, <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">port</span>).<span class="ruby-identifier">start</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">http</span><span class="ruby-operator">|</span> <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>) }
+167:               <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">header</span>.<span class="ruby-identifier">to_hash</span>
+168:               
+169:             <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:POST</span> <span class="ruby-keyword kw">then</span>
+170:               <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">url_request_uri</span>, <span class="ruby-ivar">@headers</span>)
+171:               <span class="ruby-identifier">request</span>.<span class="ruby-identifier">set_form_data</span>(<span class="ruby-ivar">@params</span>)
+172:               <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span>=<span class="ruby-identifier">data</span>
+173:               <span class="ruby-identifier">response</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@url</span>.<span class="ruby-identifier">host</span>, <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">port</span>).<span class="ruby-identifier">start</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">http</span><span class="ruby-operator">|</span> <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>) }
+174:               <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+175:               
+176:             <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:PUT</span> <span class="ruby-keyword kw">then</span>
+177:               <span class="ruby-identifier">request</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Put</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">url_request_uri</span>, <span class="ruby-ivar">@headers</span>)
+178:               <span class="ruby-identifier">request</span>.<span class="ruby-identifier">set_form_data</span>(<span class="ruby-ivar">@params</span>)
+179:               <span class="ruby-identifier">request</span>.<span class="ruby-identifier">body</span>=<span class="ruby-identifier">data</span>
+180:               <span class="ruby-identifier">response</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@url</span>.<span class="ruby-identifier">host</span>, <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">port</span>).<span class="ruby-identifier">start</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">http</span><span class="ruby-operator">|</span> <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>) }
+181:               <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+182:               
+183:             <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:DELETE</span> <span class="ruby-keyword kw">then</span>
+184:               <span class="ruby-identifier">request</span>   = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Delete</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">url_request_uri</span>, <span class="ruby-ivar">@headers</span>)
+185:               <span class="ruby-identifier">response</span>  = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@url</span>.<span class="ruby-identifier">host</span>, <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">port</span>).<span class="ruby-identifier">start</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">http</span><span class="ruby-operator">|</span> <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>) }
+186:               <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+187:               
+188:             <span class="ruby-keyword kw">else</span>
+189:               <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActionError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;La méthode (#{method}) demandée n'as pas encore été implémentée&quot;</span>)
+190:           <span class="ruby-keyword kw">end</span>
+191:         <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">error</span>
+192:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActionError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;L'action à échoué, URL invalide ou aucune connexion réseau disponnible. \n Information sur l'erreur: [#{error}]&quot;</span>)
+193:         <span class="ruby-keyword kw">end</span>
+194:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

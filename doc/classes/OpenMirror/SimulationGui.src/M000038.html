@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>appendMessage (OpenMirror::SimulationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/SimulationGui.rb, line 335</span>
+335:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">appendMessage</span>(<span class="ruby-identifier">message</span>)
+336:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;message doit être de type String&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">message</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
+337:       <span class="ruby-ivar">@@messages</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidgetItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-constant">DATE_FORMAT</span>)  <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">message</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n&quot;</span>)))
+338:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

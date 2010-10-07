@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>run (OpenMirror::Action::Execute)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File OpenMirror/lib/Action.rb, line 63</span>
+63:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">tag</span>)
+64:         <span class="ruby-comment cmt">#Remplacer les patterns par les valeurs du tag responsable de l'action</span>
+65:         <span class="ruby-identifier">command</span> = <span class="ruby-ivar">@command</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_ID</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">id</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_DATA</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">data</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_COMMAND</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">command</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">PATTERN_ACTION</span>,<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">action</span>)
+66:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActionError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;Impossible d'executer la commande \&quot;#{command}\&quot;, commande invalide.&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">system</span>(<span class="ruby-identifier">command</span>)
+67:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

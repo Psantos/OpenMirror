@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>loadEventsFromConfig (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 442</span>
+442:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">loadEventsFromConfig</span>(<span class="ruby-identifier">configFile</span>) 
+443:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-constant">LOAD_ARGUMENT_ERROR</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">configFile</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
+444:       
+445:       <span class="ruby-keyword kw">begin</span>
+446:         <span class="ruby-comment cmt">#On démarre avec une vue et un modele vide</span>
+447:         <span class="ruby-identifier">newFile</span>()
+448:         <span class="ruby-comment cmt">#Chargement depuis YAML</span>
+449:         <span class="ruby-ivar">@@loadedEventsList</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">open</span>(<span class="ruby-identifier">configFile</span>))        
+450:         
+451:         <span class="ruby-comment cmt">#Lister les items de la config par nom</span>
+452:         <span class="ruby-ivar">@@loadedEventsList</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+453:           <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidgetItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">i</span>.<span class="ruby-identifier">name</span>)))
+454:         <span class="ruby-keyword kw">end</span>
+455:                 
+456:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+457:         
+458:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+459:         <span class="ruby-identifier">puts</span> <span class="ruby-constant">LOAD_ERROR</span>
+460:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+461:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+462:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+463:         
+464:         <span class="ruby-identifier">win</span> = <span class="ruby-constant">OpenMirror</span><span class="ruby-operator">::</span><span class="ruby-constant">PopupGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">LOAD_ERROR</span>, <span class="ruby-ivar">@@qApp</span>)
+465:         <span class="ruby-identifier">win</span>.<span class="ruby-identifier">show</span>
+466:         
+467:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception</span>
+468:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+469:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot; Erreur : &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">message</span>
+470:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+471:         <span class="ruby-identifier">puts</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>
+472:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+473:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+474: 
+475:         <span class="ruby-identifier">win</span> = <span class="ruby-constant">OpenMirror</span><span class="ruby-operator">::</span><span class="ruby-constant">PopupGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">LOAD_SERIOUS_ERROR</span>, <span class="ruby-ivar">@@qApp</span>)
+476:         <span class="ruby-identifier">win</span>.<span class="ruby-identifier">show</span>
+477:       <span class="ruby-keyword kw">end</span>
+478:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

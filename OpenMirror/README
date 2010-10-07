@@ -1,0 +1,94 @@
+OpenMirror - version 1.0, multi-plateforme
+Copyright (c) 2010 - dos Santos Pedro.
+=============================================
+contact : (Pedro.d_2.Santos@gmail.com).gsub('_','')
+=============================================
+
+1 - Présentation
+2 - Configuration requise
+3 - Installation
+4 - Remarques complémentaires
+
+
+
+1 - Présentation
+================
+OpenMirror est une collection d'outils permettant d'utiliser le lecture RFID
+(Mir:ror) de Violet-Mindscape de manière générique. Le code est basé sur 
+une architecture -client-side-, mais peut être configuré pour agir en 
+mode -server-side-. La solution est codée en Ruby (version de développement 1.8.7).
+
+Avec cet ensemble de classes, vous pourrez associer une ou plusieurs actions
+à vos tags RFID (norme ISO 14443). Les actions peuvent être des commandes 
+systèmes, ainsi que des requêtes HTTP. Actuellement les méthodes GET, POST,
+PUT, DELETE et HEAD sont supportées.
+
+Le code à été structuré de manière à être rapidement pris en main
+et modifié pour s'adapter à une problèmatique spécifique. Dans ce 
+but, des fichiers de test, contiennent des exemples d'utilisation
+du code, pour faciliter sa prise en main.
+
+La solution possède aussi un ensemble d'interfaces graphiques 
+basées sur Qt. Elles permettent à un non-programmeur de prendre 
+en main le projet et de configurer le comportement du driver 
+en quelques clics.
+
+Ce code est distribué sous licence LGPLv2. 
+
+
+
+
+2 - Configuration requise
+=========================
+
+Cette version est complètement compatible avec Linux et Windows.
+Sous MacOSX suivant les versions, et le mises à jour, tout peut 
+fonctionner comme pas du tout.
+
+Les principaux problèmes viennent des librairies externes, ainsi
+que de la lecture usb.
+
+OpenMirror à besoin des modules ruby suivants:
+
+  * usb ( libusb, bindée avec ruby-usb )
+  * Qt  ( librairies Qt, bindées avec qt-ruby )
+
+
+L'espace disque requis pour l'installation est de 2.9 Mo seulement.
+
+
+
+
+3 - Installation
+================
+
+  * Installation des dépendances
+    - Référerez vous au chapitre 2 pour installer et configurer les dépendances du projet.
+
+  * Installation manuelle locale
+    - Récupérez le code via git, ou téléchargez le tarball.
+    - Décompressez dans le dossier de votre choix
+    - le code est prêt à être utilisé.
+
+
+
+4 - Remarques complémentaires
+=========================
+
+- Le Mir:ror doit être branché avant de lancer les scripts.
+
+- Sur les systèmes unix* vous devrez lancer les scripts en mode root,
+  ou utiliser le programme wrapperSUID disponnible à la même addresse.
+
+- Le programme wrapperSUID, permet d'exécuter des scripts en mode root, 
+  sans être root (ni avoir tapé sudo). Il se base sur le mécanisme du SUID.
+  Il peut lancer n'importe quel interpreteur de scripts. Voir l'usage du programme
+  pour plus de détails.
+
+- Toute contribution, (remarque, avis, commentaire, donnation, encouragement, etc) sont toujours bienvenue.
+  
+- Pour toute autre question, veuillez adressez un email à l'auteur, adresse en haut de document. 
+  /!\ attention une mesure de protection contre le spam à été utilisée, l'adresse s'écrit sans le underscore '_'
+
+
+ 

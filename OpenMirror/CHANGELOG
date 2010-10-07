@@ -1,0 +1,13 @@
+ChangeLog
+=========
+
+1.0
+-----------------
+- Code initial, lectures sur le périphérique usb
+  exécution d'actions en fonction des informations lues.
+- Afficher à l'écran l'ID des tags lus.
+- Interfaces graphiques, de simulation, configuratio, notification, vue page web, dialogue personnalisé.
+- documentation à jour.
+- wrapperSUID, permettant d'exécuter le script avec les droits SUID.
+- configuration de base.
+  

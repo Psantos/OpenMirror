@@ -1,0 +1,78 @@
+--- 
+- !ruby/object:Event 
+  name: "poser le lapin noir aux oreilles jaunes"
+  matches: 
+  - !ruby/object:Event::Match 
+    field: :action
+    value: "01"
+  - !ruby/object:Event::Match 
+    field: :id
+    value: "000008d0021a053b472143"
+  actions: 
+  - !ruby/object:Action::Execute 
+    command: "sleep 1 && aplay /media/TEMP/lapinNoirOreillesJaunes.wav 2>/dev/null"
+
+
+- !ruby/object:Event 
+  name: "poser le lapin fuschia aux oreilles noires"
+  matches: 
+  - !ruby/object:Event::Match 
+    field: :action
+    value: "01"
+  - !ruby/object:Event::Match 
+    field: :id
+    value: "000008d0021a0353140716"
+  actions: 
+  - !ruby/object:Action::Execute 
+    command: "sleep 1 && aplay /media/TEMP/Sheep\ Baaa\ 01.wav 2>/dev/null"
+
+
+
+- !ruby/object:Event 
+  name: poser un lapin inconnu - mooo
+  matches: 
+  - !ruby/object:Event::Match 
+    field: :action
+    value: "01"
+  actions: 
+  - !ruby/object:Action::Execute 
+    command: "sleep 1 && mplayer /media/DATA/PROJETS/En\ cours/Rebeaud/Reseau\ URF/www/bruitagesMoo/Farm\ Cow\ 02.mp3 1>/dev/null 2>/dev/null"
+
+
+
+- !ruby/object:Event 
+  name: retirer un lapin inconnu - http > google
+  matches: 
+  - !ruby/object:Event::Match 
+    field: :action
+    value: "02"
+  actions: 
+  - !ruby/object:Action::HTTP_URL 
+    data: ""
+    headers: {}
+
+    method: :GET
+    params: {}
+
+    url: !ruby/object:URI::HTTP 
+      fragment: 
+      host: www.google.fr
+      opaque: 
+      password: 
+      path: /@(action)
+      port: 80
+      query: 
+      registry: 
+      scheme: http
+      user: 
+  
+- !ruby/object:Event 
+  name: arreter le mirror
+  matches: 
+  - !ruby/object:Event::Match 
+    field: :action
+    value: "05"
+  actions: 
+  - !ruby/object:Action::Execute 
+    command: "killall ruby"
+

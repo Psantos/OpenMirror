@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>eventRemove (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 668</span>
+668:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eventRemove</span>()
+669:       <span class="ruby-comment cmt">#Uniquement si une event est séléectionnée</span>
+670:       <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">isItemSelected</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentItem</span>)) <span class="ruby-keyword kw">then</span>
+671:         <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-identifier">question</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EVENT_REMOVE_TEXT</span>), <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">No</span>)
+672:         
+673:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">answer</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>) <span class="ruby-keyword kw">then</span>
+674:           <span class="ruby-comment cmt">#indiquer que la configuration à été modifiée</span>
+675:           <span class="ruby-identifier">modified</span>(<span class="ruby-keyword kw">true</span>)
+676:           
+677:           <span class="ruby-comment cmt">#retirer l'event de la configuration en mémoire</span>
+678:           <span class="ruby-ivar">@@loadedEventsList</span>.<span class="ruby-identifier">delete_at</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span>)
+679:           
+680:           <span class="ruby-comment cmt">#retirer l'event de la vue</span>
+681:           <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">takeItem</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span>)
+682:           
+683:           <span class="ruby-comment cmt">#mettre à jour les vues de droite</span>
+684:           <span class="ruby-identifier">showDetails</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentItem</span>)
+685:         <span class="ruby-keyword kw">end</span>
+686:       <span class="ruby-keyword kw">end</span>
+687:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

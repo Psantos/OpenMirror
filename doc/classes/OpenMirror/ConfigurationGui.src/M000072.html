@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>actionAdd (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 828</span>
+828:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionAdd</span>()
+829:       <span class="ruby-comment cmt">#Uniquement si une event est séléctionnée</span>
+830:       <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">isItemSelected</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentItem</span>)) <span class="ruby-keyword kw">then</span>
+831:         
+832:         <span class="ruby-identifier">newAction</span> = <span class="ruby-keyword kw">nil</span>
+833:         <span class="ruby-identifier">type</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:COMBOBOX</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ACTION_ADD_FIELD_TEXT</span>, <span class="ruby-identifier">:values</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ACTION_TYPES</span>}).<span class="ruby-identifier">value</span>
+834:         
+835:         <span class="ruby-keyword kw">case</span>(<span class="ruby-identifier">type</span>)
+836:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'SYSTEM_COMMAND'</span>
+837:             <span class="ruby-comment cmt">#Par défaut on réalise des saisies sur des entiers</span>
+838:             <span class="ruby-identifier">command</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:LINE_EDIT</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">MATCH_ADD_VALUE_TEXT</span>}).<span class="ruby-identifier">value</span>
+839:             
+840:             <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">command</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">command</span>.<span class="ruby-identifier">empty?</span>) <span class="ruby-keyword kw">then</span>
+841:               <span class="ruby-comment cmt">#création d'une action temporaire</span>
+842:               <span class="ruby-identifier">newAction</span> = <span class="ruby-constant">Action</span><span class="ruby-operator">::</span><span class="ruby-constant">Execute</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">command</span>)
+843:             <span class="ruby-keyword kw">end</span>
+844: 
+845:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'HTTP_REQUEST'</span>
+846:             <span class="ruby-comment cmt">#Initialisation par défaut des champs</span>
+847:             <span class="ruby-identifier">url</span>         = <span class="ruby-value str">&quot;&quot;</span>
+848:             <span class="ruby-identifier">method</span>      = <span class="ruby-identifier">:GET</span>
+849:             <span class="ruby-identifier">params</span>      = {}
+850:             <span class="ruby-identifier">headers</span>     = {}
+851:             <span class="ruby-identifier">data</span>        = <span class="ruby-value str">&quot;&quot;</span>
+852:             
+853:             <span class="ruby-comment cmt">#Selectionner la méthode http</span>
+854:             <span class="ruby-identifier">method</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:COMBOBOX</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ACTION_HTTP_METHODS_TEXT</span>, <span class="ruby-identifier">:values</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Action</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP_URL</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP_METHODS</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">sort</span>}).<span class="ruby-identifier">value</span>
+855:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">nil?</span>
+856:             
+857:             <span class="ruby-comment cmt">#Saisie de l'url </span>
+858:             <span class="ruby-identifier">url</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:LINE_EDIT</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ACTION_HTTP_URL_TEXT</span>}).<span class="ruby-identifier">value</span>
+859:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">nil?</span>
+860: 
+861:             <span class="ruby-comment cmt"># Adaptation de la valeur de retour</span>
+862:             <span class="ruby-identifier">url</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
+863: 
+864:             <span class="ruby-comment cmt">#Saisie facultative des headers</span>
+865:             <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-identifier">question</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ACTION_HTTP_HEADERS_TEXT_ASK</span>), <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">No</span>)
+866:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">answer</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>) <span class="ruby-keyword kw">then</span>
+867:               <span class="ruby-keyword kw">begin</span>
+868:                 <span class="ruby-identifier">field</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:LINE_EDIT</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ACTION_HTTP_HEADERS_TEXT_FIELD</span>}).<span class="ruby-identifier">value</span>
+869:                 <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">field</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+870:                   <span class="ruby-identifier">value</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:LINE_EDIT</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ACTION_HTTP_HEADERS_TEXT_VALUE</span>}).<span class="ruby-identifier">value</span>
+871:                   <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+872:                     <span class="ruby-identifier">headers</span>.<span class="ruby-identifier">store</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span>)
+873:                   <span class="ruby-keyword kw">end</span>
+874:                 <span class="ruby-keyword kw">end</span>
+875:               <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-identifier">question</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ACTION_HTTP_HEADERS_TEXT_ASK_AGAIN</span>), <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">No</span>)
+876:               <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">answer</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>
+877:             <span class="ruby-keyword kw">end</span>
+878:             
+879:             <span class="ruby-keyword kw">case</span>(<span class="ruby-identifier">method</span>)
+880:               <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'POST'</span>, <span class="ruby-value str">'PUT'</span>
+881:               <span class="ruby-comment cmt">#Saisie facultative de params            </span>
+882:               <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-identifier">question</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ACTION_HTTP_PARAMS_TEXT_ASK</span>), <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">No</span>)
+883:               <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">answer</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>) <span class="ruby-keyword kw">then</span>
+884:                 <span class="ruby-keyword kw">begin</span>
+885:                   <span class="ruby-identifier">field</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:LINE_EDIT</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ACTION_HTTP_PARAMS_TEXT_FIELD</span>}).<span class="ruby-identifier">value</span>
+886:                   <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">field</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+887:                     <span class="ruby-identifier">value</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:LINE_EDIT</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ACTION_HTTP_PARAMS_TEXT_VALUE</span>}).<span class="ruby-identifier">value</span>
+888:                     <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+889:                       <span class="ruby-identifier">params</span>.<span class="ruby-identifier">store</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span>)
+890:                     <span class="ruby-keyword kw">end</span>
+891:                   <span class="ruby-keyword kw">end</span>
+892:                   <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-identifier">question</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ACTION_HTTP_PARAMS_TEXT_ASK_AGAIN</span>), <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">No</span>)
+893:                 <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">answer</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>
+894:               <span class="ruby-keyword kw">end</span>
+895: 
+896:             <span class="ruby-comment cmt">#Saisie facultative des data</span>
+897:             <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-identifier">question</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ACTION_HTTP_DATA_TEXT_ASK</span>), <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">No</span>)
+898:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">answer</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>) <span class="ruby-keyword kw">then</span>
+899:               <span class="ruby-identifier">value</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:LINE_EDIT</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ACTION_HTTP_DATA_TEXT_VALUE</span>}).<span class="ruby-identifier">value</span>
+900:             <span class="ruby-keyword kw">end</span>                
+901:           <span class="ruby-keyword kw">end</span> 
+902:           
+903:           <span class="ruby-comment cmt">#création d'une action temporaire</span>
+904:           <span class="ruby-identifier">newAction</span> = <span class="ruby-constant">Action</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP_URL</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">method</span> = <span class="ruby-identifier">:GET</span>, <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">headers</span> = {}, <span class="ruby-identifier">data</span> = <span class="ruby-value str">&quot;&quot;</span>)
+905:         <span class="ruby-keyword kw">end</span>
+906:       
+907:           
+908:         <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">type</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">newAction</span>.<span class="ruby-identifier">nil?</span>) <span class="ruby-keyword kw">then</span>
+909:           <span class="ruby-comment cmt">#Ajouter à l'event en mémoire</span>
+910:           <span class="ruby-ivar">@@loadedEventsList</span>[<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span>].<span class="ruby-identifier">actions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">newAction</span>
+911:           
+912:           <span class="ruby-comment cmt">#Ajouter à la vue</span>
+913:           <span class="ruby-ivar">@eventActionsList</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidgetItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-value str">'['</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">newAction</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;OpenMirror::Action::&quot;</span>,<span class="ruby-value str">''</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">'] : '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">newAction</span>.<span class="ruby-identifier">to_s</span> )))
+914:           
+915:           <span class="ruby-comment cmt">#indiquer que la configuration à été modifiée</span>
+916:           <span class="ruby-identifier">modified</span>(<span class="ruby-keyword kw">true</span>)
+917:         <span class="ruby-keyword kw">end</span>
+918:       <span class="ruby-keyword kw">end</span>
+919:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

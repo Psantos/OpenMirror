@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>scanForMirrors (OpenMirror/bin/DriverMirrorGui.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/bin/DriverMirrorGui.rb, line 83</span>
+ 83: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scanForMirrors</span>
+ 84:   <span class="ruby-keyword kw">begin</span>
+ 85:     <span class="ruby-comment cmt">#Détéction si plusieurs mirrors sont connectés</span>
+ 86:     <span class="ruby-identifier">listeMirrors</span> = <span class="ruby-constant">Mirror</span>.<span class="ruby-identifier">mirrors</span>
+ 87:     
+ 88:     <span class="ruby-comment cmt">#Message d'avertissement si plusieurs mirrors sont connectés et que le mode multimirror</span>
+ 89:     <span class="ruby-comment cmt"># n'est pas activé</span>
+ 90:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">OPTIONS</span>[<span class="ruby-value str">&quot;--verbose&quot;</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-constant">OPTIONS</span>[<span class="ruby-value str">&quot;--multimirror&quot;</span>] <span class="ruby-keyword kw">then</span>
+ 91:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">listeMirrors</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">then</span>
+ 92:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+ 93:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;/!\\ Attention plusieurs mirrors ont été détectés sur votre machine&quot;</span>
+ 94:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Seule le premier sera utilisé pour la lecture.&quot;</span>
+ 95:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+ 96:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Pour activer une lecture sur tous les périphériques, veuillez activer&quot;</span>
+ 97:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;l'option --multimirror.&quot;</span>
+ 98:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+ 99:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+100:       <span class="ruby-keyword kw">end</span>
+101:     <span class="ruby-keyword kw">end</span>
+102:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">listeMirrors</span>
+103:   <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Mirror</span><span class="ruby-operator">::</span><span class="ruby-constant">MirrorError</span>
+104:       <span class="ruby-identifier">message</span> = <span class="ruby-value str">&quot;Attention, Aucun mirror détecté!\n Veuillez vérifier vos branchements USB, et relancer le programme &quot;</span>
+105:       <span class="ruby-identifier">app</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Application</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ARGV</span>)
+106:       <span class="ruby-identifier">win</span> = <span class="ruby-constant">OpenMirror</span><span class="ruby-operator">::</span><span class="ruby-constant">PopupGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">message</span>, <span class="ruby-identifier">app</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-constant">BIG_DELAY_POPUP</span>)
+107:       <span class="ruby-identifier">win</span>.<span class="ruby-identifier">show</span>
+108:       <span class="ruby-identifier">app</span>.<span class="ruby-identifier">exec</span>
+109:       
+110:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">OPTIONS</span>[<span class="ruby-value str">&quot;--verbose&quot;</span>] <span class="ruby-keyword kw">then</span>      
+111:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+112:       <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot; #{message}                &quot;</span>
+113:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+114:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+115:     <span class="ruby-keyword kw">end</span>
+116:   <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception</span>
+117:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">OPTIONS</span>[<span class="ruby-value str">&quot;--verbose&quot;</span>] <span class="ruby-keyword kw">then</span>
+118:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+119:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot; Erreur : &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">message</span>
+120:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+121:       <span class="ruby-identifier">puts</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>
+122:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+123:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+124:     <span class="ruby-keyword kw">end</span>
+125:     
+126:     <span class="ruby-comment cmt">#Signaler au programme appellant qu'une erreur à été rencontrée</span>
+127:     <span class="ruby-identifier">exit</span>(<span class="ruby-value">-1</span>)
+128:   <span class="ruby-keyword kw">end</span>
+129: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

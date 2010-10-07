@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>run (OpenMirror::Action::RaiseAction)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File OpenMirror/lib/Action.rb, line 88</span>
+88:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">tag</span>)
+89:         <span class="ruby-keyword kw">begin</span>
+90:           <span class="ruby-ivar">@actionToRaise</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">tag</span>)
+91:         <span class="ruby-keyword kw">rescue</span>
+92:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActionError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;Impossible d'exécuter l'action, car action invalide&quot;</span>)
+93:         <span class="ruby-keyword kw">end</span>
+94:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

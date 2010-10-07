@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (OpenMirror::SimulationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/SimulationGui.rb, line 205</span>
+205:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">qApp</span>, <span class="ruby-identifier">parent</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">configurationFile</span> = <span class="ruby-constant">EVENT_CONFIGURATION_FILE</span>, <span class="ruby-identifier">color</span> = <span class="ruby-keyword kw">nil</span>)
+206:       <span class="ruby-ivar">@@qApp</span> = <span class="ruby-identifier">qApp</span>
+207:       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">parent</span>)
+208:       
+209:       <span class="ruby-ivar">@@configurationFile</span> = <span class="ruby-identifier">configurationFile</span>
+210:       
+211:       <span class="ruby-comment cmt">#Construction du layout global</span>
+212:       <span class="ruby-identifier">globalLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+213:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">spacing</span> = <span class="ruby-constant">LAYOUT_SPACING</span>
+214:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">margin</span> = <span class="ruby-constant">GLOBAL_LAYOUT_MARGIN</span>
+215:       <span class="ruby-identifier">setStyleSheet</span>(<span class="ruby-node">&quot;background-color: #{color}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">color</span>.<span class="ruby-identifier">nil?</span>
+216:       
+217:       <span class="ruby-comment cmt">#Construction du layout gauche</span>
+218:       <span class="ruby-identifier">leftLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>      
+219:       
+220:       <span class="ruby-comment cmt">#Construction du layout droit</span>
+221:       <span class="ruby-identifier">rightLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+222:       
+223:       <span class="ruby-comment cmt">#Construction du layout de la vue mirror</span>
+224:       <span class="ruby-identifier">mirrorLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+225:       <span class="ruby-identifier">internMirrorLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+226:       
+227:       <span class="ruby-comment cmt">#Construction du layout de la vue messages</span>
+228:       <span class="ruby-identifier">messagesLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+229:       <span class="ruby-identifier">internMessagesLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+230:       <span class="ruby-identifier">messagesList</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidget</span>.<span class="ruby-identifier">new</span>
+231:       <span class="ruby-ivar">@@messages</span> = <span class="ruby-identifier">messagesList</span>
+232:       
+233:       <span class="ruby-comment cmt">#Construction du layout de la vue des tags</span>
+234:       <span class="ruby-identifier">tagsLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+235:             
+236:       <span class="ruby-comment cmt">#Construction de la vue du mirror</span>
+237:       <span class="ruby-identifier">mirrorStateGroupBox</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">GroupBox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">STATE_LABEL</span>))
+238:       <span class="ruby-identifier">mirrorStateGroupBox</span>.<span class="ruby-identifier">layout</span> = <span class="ruby-identifier">internMirrorLayout</span>
+239:       <span class="ruby-identifier">mirrorStateGroupBox</span>.<span class="ruby-identifier">backgroundRole</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Palette</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>
+240: 
+241:       <span class="ruby-identifier">mirrorStateRadioON</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">ON_LABEL</span>))
+242:       <span class="ruby-identifier">mirrorStateRadioOFF</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">OFF_LABEL</span>))
+243:       <span class="ruby-identifier">mirrorStateRadioON</span>.<span class="ruby-identifier">checked</span> = <span class="ruby-keyword kw">true</span>
+244:       <span class="ruby-identifier">mirrorSpacerLeft</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SpacerItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">20</span>, <span class="ruby-value">40</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>)
+245:       <span class="ruby-identifier">mirrorSpacerRight</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SpacerItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">20</span>, <span class="ruby-value">40</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>)
+246:       
+247:       <span class="ruby-comment cmt">#Construction du label contenant l'image du mirror</span>
+248:       <span class="ruby-identifier">mirrorImageLabel</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>
+249:       <span class="ruby-identifier">mirrorImageLabel</span>.<span class="ruby-identifier">backgroundRole</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Palette</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>
+250:       <span class="ruby-identifier">mirrorImageLabel</span>.<span class="ruby-identifier">setSizePolicy</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>)
+251:       <span class="ruby-identifier">mirrorImageLabel</span>.<span class="ruby-identifier">scaledContents</span> = <span class="ruby-keyword kw">true</span>
+252:       <span class="ruby-identifier">imageMirror</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">MIRROR_IMAGE_FILE_NAME</span>)
+253:       
+254:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">imageMirror</span>.<span class="ruby-identifier">null?</span>)
+255:         <span class="ruby-comment cmt">#Image invalide</span>
+256:         <span class="ruby-identifier">mirrorImageLabel</span>.<span class="ruby-identifier">text</span> = <span class="ruby-constant">MIRROR_NAME_TEXT</span>
+257:         <span class="ruby-identifier">mirrorImageLabel</span>.<span class="ruby-identifier">setStyleSheet</span>(<span class="ruby-value str">&quot;font-weight: bold;&quot;</span> <span class="ruby-operator">+</span>
+258:                                        <span class="ruby-value str">&quot;font-variant: small-caps;&quot;</span> <span class="ruby-operator">+</span>
+259:                                        <span class="ruby-node">&quot;background-color: #{color}&quot;</span>)
+260:       <span class="ruby-keyword kw">else</span>
+261:         <span class="ruby-comment cmt">#Image valide</span>
+262:         <span class="ruby-identifier">mirrorImageLabel</span>.<span class="ruby-identifier">pixmap</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Pixmap</span>.<span class="ruby-identifier">fromImage</span>(<span class="ruby-identifier">imageMirror</span>)
+263:       <span class="ruby-keyword kw">end</span>
+264:       
+265:       <span class="ruby-comment cmt">#Construction de la vue messages</span>
+266:       <span class="ruby-identifier">messagesGroupBox</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">GroupBox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">MESSAGES_LABEL</span>))
+267:       <span class="ruby-identifier">messagesGroupBox</span>.<span class="ruby-identifier">setSizePolicy</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Ignored</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Preferred</span>)
+268:       <span class="ruby-identifier">messagesGroupBox</span>.<span class="ruby-identifier">layout</span> = <span class="ruby-identifier">internMessagesLayout</span>
+269: 
+270:       <span class="ruby-comment cmt">#Construction de la vue tags</span>
+271:       <span class="ruby-identifier">tagsGroupBox</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">GroupBox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">TAGS_LABEL</span>))
+272:       <span class="ruby-identifier">tagsGroupBox</span>.<span class="ruby-identifier">setSizePolicy</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Preferred</span>)
+273:       <span class="ruby-identifier">tagsGroupBox</span>.<span class="ruby-identifier">layout</span> = <span class="ruby-identifier">tagsLayout</span>
+274:       
+275:       <span class="ruby-comment cmt"># Mise en forme de la vue principale</span>
+276:       <span class="ruby-identifier">setLayout</span>(<span class="ruby-identifier">globalLayout</span>)
+277:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">leftLayout</span>)
+278:       
+279:       <span class="ruby-identifier">leftLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">mirrorLayout</span>)
+280:       
+281:       <span class="ruby-identifier">mirrorLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">mirrorStateGroupBox</span>)
+282:       <span class="ruby-identifier">internMirrorLayout</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-identifier">mirrorSpacerLeft</span>)
+283:       <span class="ruby-identifier">internMirrorLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">mirrorImageLabel</span>)
+284:       <span class="ruby-identifier">internMirrorLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">mirrorStateRadioON</span>)
+285:       <span class="ruby-identifier">internMirrorLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">mirrorStateRadioOFF</span>)
+286:       <span class="ruby-identifier">internMirrorLayout</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-identifier">mirrorSpacerRight</span>)
+287:       
+288:       <span class="ruby-identifier">messagesLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">messagesGroupBox</span>)
+289:       <span class="ruby-identifier">leftLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">messagesLayout</span>)
+290:       <span class="ruby-identifier">messagesLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">messagesList</span>)
+291:       
+292:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">rightLayout</span>)
+293:       <span class="ruby-identifier">rightLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">tagsGroupBox</span>)
+294: 
+295:       <span class="ruby-comment cmt">#Ajouter les composants tags</span>
+296:       <span class="ruby-constant">TAGS</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+297:         <span class="ruby-identifier">tagsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-constant">TagWidget</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">TAGS</span>[<span class="ruby-identifier">i</span>], <span class="ruby-constant">TAG_IMAGE_FILE_NAME</span>[<span class="ruby-identifier">i</span> <span class="ruby-operator">%</span> <span class="ruby-constant">TAG_IMAGE_FILE_NAME</span>.<span class="ruby-identifier">size</span>]))
+298:       <span class="ruby-keyword kw">end</span>
+299: 
+300:       <span class="ruby-comment cmt">#Définir le titre de la fenetêtre</span>
+301:       <span class="ruby-identifier">setWindowTitle</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>))
+302:       
+303:       <span class="ruby-comment cmt">#Redimensionner à une taille spécifique</span>
+304:       <span class="ruby-identifier">resize</span>(<span class="ruby-constant">MIN_WIDTH</span>, <span class="ruby-constant">MIN_HEIGHT</span>)
+305:       
+306:       
+307:       <span class="ruby-comment cmt">#Connecter les différents widgets</span>
+308:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">mirrorStateRadioON</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'mirrorON()'</span>))
+309:       <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">mirrorStateRadioOFF</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'mirrorOFF()'</span>))
+310:       
+311:       <span class="ruby-comment cmt">#Charger les évenements associés aux tags</span>
+312:       <span class="ruby-constant">SimulationGui</span><span class="ruby-operator">::</span><span class="ruby-identifier">loadEventsFromConfig</span>
+313:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

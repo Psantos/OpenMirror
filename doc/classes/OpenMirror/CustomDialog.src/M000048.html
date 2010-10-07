@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>exec (OpenMirror::CustomDialog)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/CustomDialog.rb, line 213</span>
+213:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exec</span>
+214:       <span class="ruby-identifier">val</span> = <span class="ruby-keyword kw">super</span>()
+215:       
+216:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Dialog</span><span class="ruby-operator">::</span><span class="ruby-constant">Accepted</span>
+217:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+218:       <span class="ruby-keyword kw">else</span>
+219:         <span class="ruby-ivar">@returnValue</span> = <span class="ruby-keyword kw">nil</span>
+220:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+221:       <span class="ruby-keyword kw">end</span>
+222:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

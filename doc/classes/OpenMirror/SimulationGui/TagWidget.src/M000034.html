@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (OpenMirror::SimulationGui::TagWidget)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/SimulationGui.rb, line 116</span>
+116:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">image</span>, <span class="ruby-identifier">parent</span> = <span class="ruby-keyword kw">nil</span>)
+117:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">parent</span>)
+118:         <span class="ruby-ivar">@@tagCount</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+119:         <span class="ruby-ivar">@tag</span> = <span class="ruby-identifier">tag</span>
+120:         
+121:         <span class="ruby-comment cmt">#Vérification du type des paramètres</span>
+122:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;tag doit être de type Tag&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Tag</span>
+123:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;image doit être de type String&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">image</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
+124:      
+125:         <span class="ruby-comment cmt">#Création des layouts</span>
+126:         <span class="ruby-identifier">localeLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+127:         <span class="ruby-identifier">tagLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+128:         <span class="ruby-identifier">internTagLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+129: 
+130:         <span class="ruby-comment cmt">#Composants graphiques internes</span>
+131:         <span class="ruby-identifier">tagGroupBox</span>             = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">GroupBox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">TAG_NUMBER_TEXT</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@@tagCount</span>.<span class="ruby-identifier">to_s</span>))
+132:         <span class="ruby-identifier">tagGroupBox</span>.<span class="ruby-identifier">layout</span>      = <span class="ruby-identifier">tagLayout</span>
+133:         <span class="ruby-identifier">tagIdLabel</span>              = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;id: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">id</span>)
+134:         <span class="ruby-identifier">tagDataLabel</span>            = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;data: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">data</span>)
+135:         <span class="ruby-identifier">tagStateRadioON</span>         = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-value str">&quot;ON&quot;</span>))
+136:         <span class="ruby-identifier">tagStateRadioOFF</span>        = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-value str">&quot;OFF&quot;</span>))
+137:         <span class="ruby-identifier">tagStateRadioOFF</span>.<span class="ruby-identifier">checked</span> = <span class="ruby-keyword kw">true</span>
+138:         <span class="ruby-identifier">tagSpacerTop</span>            = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SpacerItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">20</span>, <span class="ruby-value">40</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>)
+139:         <span class="ruby-identifier">tagSpacerBottom</span>         = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SpacerItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">20</span>, <span class="ruby-value">40</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>)
+140:         <span class="ruby-identifier">tagSpacerRight</span>          = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SpacerItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">20</span>, <span class="ruby-value">40</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>)
+141:                 
+142:         <span class="ruby-comment cmt">#Labelcontenant l'image</span>
+143:         <span class="ruby-identifier">tagImageLabel</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>
+144:         <span class="ruby-identifier">tagImageLabel</span>.<span class="ruby-identifier">backgroundRole</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Palette</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>
+145:         <span class="ruby-identifier">tagImageLabel</span>.<span class="ruby-identifier">setSizePolicy</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>)
+146:         <span class="ruby-identifier">tagImageLabel</span>.<span class="ruby-identifier">scaledContents</span> = <span class="ruby-keyword kw">true</span>
+147:         
+148:         <span class="ruby-identifier">imageTag</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">image</span>)
+149:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">imageTag</span>.<span class="ruby-identifier">null?</span>)
+150:           <span class="ruby-comment cmt">#Image invalide</span>
+151:           <span class="ruby-identifier">tagImageLabel</span>.<span class="ruby-identifier">text</span> = <span class="ruby-constant">ALTERNATE_TEXT_TAG</span>
+152:           <span class="ruby-identifier">tagImageLabel</span>.<span class="ruby-identifier">setStyleSheet</span>(<span class="ruby-constant">ALTERNATE_TEXT_STYLE</span>)
+153:         <span class="ruby-keyword kw">else</span>
+154:           <span class="ruby-comment cmt">#Image valide</span>
+155:           <span class="ruby-identifier">tagImageLabel</span>.<span class="ruby-identifier">pixmap</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Pixmap</span>.<span class="ruby-identifier">fromImage</span>(<span class="ruby-identifier">imageTag</span>)
+156:         <span class="ruby-keyword kw">end</span>
+157:       
+158:         <span class="ruby-identifier">tagLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">tagImageLabel</span>)
+159:         <span class="ruby-identifier">tagLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">internTagLayout</span>)
+160:         <span class="ruby-identifier">internTagLayout</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-identifier">tagSpacerTop</span>)
+161:         <span class="ruby-identifier">internTagLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">tagIdLabel</span>)
+162:         <span class="ruby-identifier">internTagLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">tagDataLabel</span>)
+163:         <span class="ruby-identifier">internTagLayout</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-identifier">tagSpacerBottom</span>)
+164:         <span class="ruby-identifier">tagLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">tagStateRadioON</span>)
+165:         <span class="ruby-identifier">tagLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">tagStateRadioOFF</span>)
+166:         <span class="ruby-identifier">tagLayout</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-identifier">tagSpacerRight</span>)
+167:        
+168:         <span class="ruby-identifier">setLayout</span>(<span class="ruby-identifier">localeLayout</span>)
+169:         <span class="ruby-identifier">localeLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">tagGroupBox</span>)
+170:         
+171:         <span class="ruby-comment cmt">#Connexion des éléments</span>
+172:         <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">tagStateRadioON</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'tagON()'</span>))
+173:         <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">tagStateRadioOFF</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'tagOFF()'</span>))
+174:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>modified (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 513</span>
+513:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">modified</span>(<span class="ruby-identifier">state</span>)
+514:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">state</span>) <span class="ruby-keyword kw">then</span>
+515:         <span class="ruby-ivar">@@modified</span> = <span class="ruby-keyword kw">true</span>
+516:         <span class="ruby-identifier">setWindowTitle</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'*'</span>))
+517:       <span class="ruby-keyword kw">else</span>
+518:         <span class="ruby-ivar">@@modified</span> = <span class="ruby-keyword kw">false</span>
+519:         <span class="ruby-identifier">setWindowTitle</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>))
+520:       <span class="ruby-keyword kw">end</span>
+521:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

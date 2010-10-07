@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>checkRegexp (OpenMirror::CustomDialog)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/CustomDialog.rb, line 230</span>
+230:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">checkRegexp</span>(<span class="ruby-identifier">value</span>)      
+231:       <span class="ruby-keyword kw">begin</span>
+232:         <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>)
+233:         
+234:         <span class="ruby-comment cmt">#Regexp valid</span>
+235:         <span class="ruby-ivar">@okButton</span>.<span class="ruby-identifier">enabled</span> = <span class="ruby-keyword kw">true</span>
+236:         <span class="ruby-identifier">setStyleSheet</span>(<span class="ruby-node">&quot;QLineEdit { background-color: #{DEFAULT_REGEX_LINEEDIT_BACKGROUND_COLOR} }&quot;</span>)
+237:       <span class="ruby-keyword kw">rescue</span>
+238:         
+239:         <span class="ruby-comment cmt">#Regexp invalide</span>
+240:         <span class="ruby-ivar">@okButton</span>.<span class="ruby-identifier">enabled</span> = <span class="ruby-keyword kw">false</span>
+241:         <span class="ruby-identifier">setStyleSheet</span>(<span class="ruby-node">&quot;QLineEdit { background-color: #{DEFAULT_REGEX_LINEEDIT_ERROR_BACKGROUND_COLOR} }&quot;</span>)
+242:       <span class="ruby-keyword kw">end</span>
+243:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

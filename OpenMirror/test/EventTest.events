@@ -1,0 +1,92 @@
+--- 
+- !ruby/object:Event 
+  name: "Lapin bleu noir"
+  actions: 
+  - !ruby/object:Action::HTTP_URL 
+    data: ""
+    headers: {}
+
+    method: :GET
+    params: {}
+
+    url: !ruby/object:URI::HTTP 
+      fragment: 
+      host: www.perdu.com
+      opaque: 
+      password: 
+      path: ""
+      port: 80
+      query: 
+      registry: 
+      scheme: http
+      user: 
+  - !ruby/object:Action::Execute 
+    command: echo "@(id)" >> Lapins.connus
+  matches: 
+  - !ruby/object:Event::Match 
+    field: :action
+    value: "01"
+  - !ruby/object:Event::Match 
+    field: :id
+    value: "000008d0021a053b4d4c11"
+
+
+- !ruby/object:Event 
+  name: "Lapin noir jaune"
+  matches: 
+  - !ruby/object:Event::Match 
+    field: :action
+    value: "01"
+  - !ruby/object:Event::Match 
+    field: :id
+    value: "000008d0021a053b472143"
+  actions: 
+  - !ruby/object:Action::Execute 
+    command: eject
+  - !ruby/object:Action::Execute 
+    command: echo "@(id)" >> Lapins.connus
+
+
+- !ruby/object:Event 
+  name: "id commençant par 000008d0021"
+  actions: 
+  - !ruby/object:Action::HTTP_URL 
+    data: ""
+    headers: {}
+
+    method: :HEAD
+    params: {}
+
+    url: !ruby/object:URI::HTTP 
+      fragment: 
+      host: www.google.ch
+      opaque: 
+      password: 
+      path: /@(id)
+      port: 80
+      query: 
+      registry: 
+      scheme: http
+      user: 
+  - !ruby/object:Action::Execute 
+    command: echo "@(id)" >> Lapins.connus
+  - !ruby/object:Action::Execute 
+    command: eject
+  matches: 
+  - !ruby/object:Event::Match 
+    field: :action
+    value: "01"
+  - !ruby/object:Event::Match 
+    field: :id
+    value: !ruby/regexp /000008d0021*/
+
+
+- !ruby/object:Event 
+  name: "Tous les lapins"
+  actions: 
+  - !ruby/object:Action::Execute 
+    command: echo "@(id)" >> Lapins
+  matches: 
+  - !ruby/object:Event::Match 
+    field: :action
+    value: "01"

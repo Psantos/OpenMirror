@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (OpenMirror::Action::HTTP_URL)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/lib/Action.rb, line 117</span>
+117:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">method</span> = <span class="ruby-identifier">:GET</span>, <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">headers</span> = {}, <span class="ruby-identifier">data</span> = <span class="ruby-value str">&quot;&quot;</span>)
+118:         
+119:         <span class="ruby-comment cmt">#Verification des types de données</span>
+120:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;method #{method} inconnu&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">HTTP_METHODS</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">method</span>
+121:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;params #{params.class} invalide, Hash requis&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Hash</span>       
+122:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;headers #{headers.class} invalide, Hash requis&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">headers</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Hash</span>       
+123:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;data #{data.class} invalide, String requis&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span> 
+124:         
+125:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span> <span class="ruby-keyword kw">then</span>
+126:           <span class="ruby-comment cmt">#tentative de parsage</span>
+127:           <span class="ruby-keyword kw">begin</span>
+128:             <span class="ruby-identifier">url</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>)
+129:           <span class="ruby-keyword kw">rescue</span>
+130:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;url #{url} mal formé&quot;</span>
+131:           <span class="ruby-keyword kw">end</span>
+132:         <span class="ruby-keyword kw">else</span>
+133:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;url #{url.class} invalide, URI requis&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">URI</span>
+134:         <span class="ruby-keyword kw">end</span>
+135:         
+136:   
+137:         <span class="ruby-comment cmt">#Affectation des valeurs passées au constructeur avec application des valeurs par défaut        </span>
+138:         <span class="ruby-ivar">@url</span>            = <span class="ruby-identifier">url</span>
+139:         <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">port</span>       = <span class="ruby-constant">DEFAULT_PORT</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">port</span>.<span class="ruby-identifier">nil?</span>
+140:         <span class="ruby-ivar">@method</span>         = <span class="ruby-identifier">method</span>
+141:         <span class="ruby-ivar">@params</span>         = <span class="ruby-identifier">params</span>
+142:         <span class="ruby-ivar">@headers</span>        = <span class="ruby-identifier">headers</span>
+143:         <span class="ruby-ivar">@data</span>           = <span class="ruby-identifier">data</span>
+144:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

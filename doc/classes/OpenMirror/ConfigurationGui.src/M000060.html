@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>newFile (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 525</span>
+525:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">newFile</span>()
+526:       <span class="ruby-comment cmt">#indiquer que la configuration à été modifiée</span>
+527:       <span class="ruby-identifier">modified</span>(<span class="ruby-keyword kw">true</span>)
+528:       
+529:       <span class="ruby-ivar">@@loadedEventsList</span> = []
+530:       <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">clear</span>
+531:       <span class="ruby-ivar">@eventActionsList</span>.<span class="ruby-identifier">clear</span>
+532:       <span class="ruby-ivar">@eventMatchesList</span>.<span class="ruby-identifier">clear</span>
+533:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

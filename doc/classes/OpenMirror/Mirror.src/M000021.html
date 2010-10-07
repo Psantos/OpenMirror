@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>read (OpenMirror::Mirror)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/lib/Mirror.rb, line 119</span>
+119:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>
+120:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@opened</span> <span class="ruby-keyword kw">then</span>  
+121:         <span class="ruby-comment cmt">#Déclaration d'un tampon vide et d'une référence</span>
+122:         <span class="ruby-identifier">dataPack</span> = ([<span class="ruby-value">0</span>]<span class="ruby-operator">*</span><span class="ruby-value">64</span>).<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'C*'</span>)
+123: 
+124:         <span class="ruby-comment cmt">#Lire le mirror tant que la lecture n'est pas vide</span>
+125:         <span class="ruby-keyword kw">begin</span>
+126:           <span class="ruby-ivar">@handle</span>.<span class="ruby-identifier">usb_bulk_read</span>(<span class="ruby-ivar">@endpoint</span>.<span class="ruby-identifier">bEndpointAddress</span>,<span class="ruby-identifier">dataPack</span>,<span class="ruby-constant">TIME_OUT</span>)
+127:         <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">dataPack</span> <span class="ruby-operator">===</span> <span class="ruby-ivar">@@NULL_DATA_PACK</span>   
+128:         
+129:         <span class="ruby-comment cmt">#Creer un nouvel objet Tag sur la base de la lecture</span>
+130:         <span class="ruby-identifier">dataArray</span> = <span class="ruby-identifier">dataPack</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">'H2'</span><span class="ruby-operator">*</span><span class="ruby-value">32</span>)      
+131:         <span class="ruby-identifier">tagRead</span> = <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dataArray</span>[<span class="ruby-constant">RANGE_COMMAND</span>].<span class="ruby-identifier">to_s</span>,<span class="ruby-identifier">dataArray</span>[<span class="ruby-constant">RANGE_ACTION</span>].<span class="ruby-identifier">to_s</span>,<span class="ruby-identifier">dataArray</span>[<span class="ruby-constant">RANGE_ID</span>].<span class="ruby-identifier">to_s</span>,<span class="ruby-identifier">dataArray</span>[<span class="ruby-constant">RANGE_DATA</span>].<span class="ruby-identifier">to_s</span>)
+132:       
+133:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">tagRead</span>
+134:       <span class="ruby-keyword kw">else</span>
+135:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">MirrorError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;Erreur le mirror n'est pas ouvert&quot;</span>)
+136:       <span class="ruby-keyword kw">end</span>
+137:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>match (OpenMirror::Event::Match)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File OpenMirror/lib/Event.rb, line 48</span>
+48:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">match</span>(<span class="ruby-identifier">tag</span>)
+49:         <span class="ruby-keyword kw">case</span>(<span class="ruby-identifier">field</span>)
+50:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:id</span>      <span class="ruby-keyword kw">then</span>
+51:             <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">areEqual?</span>(<span class="ruby-ivar">@value</span>, <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">id</span>)
+52:           
+53:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:data</span>    <span class="ruby-keyword kw">then</span>
+54:             <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">areEqual?</span>(<span class="ruby-ivar">@value</span>, <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">data</span>)
+55:             
+56:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:command</span>         <span class="ruby-keyword kw">then</span>
+57:             <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">areEqual?</span>(<span class="ruby-ivar">@value</span>, <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">command</span>)
+58:             
+59:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:action</span>  <span class="ruby-keyword kw">then</span>
+60:             <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">areEqual?</span>(<span class="ruby-ivar">@value</span>, <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">action</span>)
+61:           
+62:           <span class="ruby-comment cmt">#nom de field inconnu, évaluation fausse</span>
+63:           <span class="ruby-keyword kw">else</span>
+64:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+65:         <span class="ruby-keyword kw">end</span>
+66:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

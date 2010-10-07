@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>mirrorON (OpenMirror::SimulationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/SimulationGui.rb, line 376</span>
+376:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mirrorON</span>()
+377:       <span class="ruby-comment cmt">#Créer nouvelle instance de Tag, et simuler un événement</span>
+378:       <span class="ruby-identifier">tagSimul</span> = <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Tag</span><span class="ruby-operator">::</span><span class="ruby-constant">COMMAND</span>[<span class="ruby-identifier">:COMMAND_ONOFF</span>], <span class="ruby-constant">Tag</span><span class="ruby-operator">::</span><span class="ruby-constant">ACTION</span>[<span class="ruby-identifier">:ACTION_MIRROR_OFF</span>], <span class="ruby-value str">''</span>, <span class="ruby-value str">''</span>)
+379:         
+380:       <span class="ruby-comment cmt">#Simuler l'événement</span>
+381:       <span class="ruby-identifier">eventName</span> = <span class="ruby-constant">SimulationGui</span><span class="ruby-operator">::</span><span class="ruby-identifier">tagSimulate</span>(<span class="ruby-identifier">tagSimul</span>)
+382:       
+383:       <span class="ruby-comment cmt">#Message de log</span>
+384:       <span class="ruby-constant">SimulationGui</span><span class="ruby-operator">::</span><span class="ruby-identifier">appendMessage</span>(<span class="ruby-constant">MIRROR_ON_MESSAGE</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n\tevent =&gt; &quot;</span> <span class="ruby-operator">+</span>  <span class="ruby-identifier">eventName</span>)
+385:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

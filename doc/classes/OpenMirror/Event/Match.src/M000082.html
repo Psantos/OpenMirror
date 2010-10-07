@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>areEqual? (OpenMirror::Event::Match)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/lib/Event.rb, line 82</span>
+ 82:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">areEqual?</span>(<span class="ruby-identifier">reference</span>, <span class="ruby-identifier">value</span>)
+ 83:               
+ 84:         <span class="ruby-keyword kw">case</span>(<span class="ruby-identifier">reference</span>)
+ 85:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span><span class="ruby-operator">:</span>
+ 86:             <span class="ruby-keyword kw">return</span> (<span class="ruby-identifier">reference</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span>)
+ 87:             
+ 88:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Regexp</span><span class="ruby-operator">:</span>
+ 89:             <span class="ruby-keyword kw">return</span> (<span class="ruby-identifier">reference</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">value</span>) <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>)
+ 90:             
+ 91:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Fixnum</span><span class="ruby-operator">:</span>
+ 92:             <span class="ruby-keyword kw">return</span> (<span class="ruby-identifier">reference</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_i</span>)
+ 93:             
+ 94:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Symbol</span><span class="ruby-operator">:</span>
+ 95:             <span class="ruby-keyword kw">return</span> (<span class="ruby-identifier">reference</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_sym</span>)   
+ 96:             
+ 97:           <span class="ruby-comment cmt">#classe inconnue, évaluation fausse</span>
+ 98:           <span class="ruby-keyword kw">else</span>
+ 99:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+100:         <span class="ruby-keyword kw">end</span>
+101:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

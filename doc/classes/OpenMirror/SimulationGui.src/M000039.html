@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>loadEventsFromConfig (OpenMirror::SimulationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/SimulationGui.rb, line 341</span>
+341:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">loadEventsFromConfig</span>
+342:       <span class="ruby-keyword kw">begin</span>
+343:         <span class="ruby-constant">Event</span>.<span class="ruby-identifier">setConfiguration</span>(<span class="ruby-ivar">@@configurationFile</span>)
+344:         
+345:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+346:         
+347:         <span class="ruby-identifier">errorMessage</span> = <span class="ruby-value str">&quot; Impossible de charger le fichier de configuration                           \n&quot;</span> <span class="ruby-operator">+</span>
+348:                        <span class="ruby-value str">&quot;   fichier introuvable, ou vous n'avez pas les droits de                     \n&quot;</span> <span class="ruby-operator">+</span>
+349:                        <span class="ruby-value str">&quot;   lecture sur le fichier. (&quot;</span> <span class="ruby-operator">+</span>  <span class="ruby-ivar">@@configurationFile</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;)          \n&quot;</span> 
+350:                       
+351:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+352:         <span class="ruby-identifier">puts</span> <span class="ruby-identifier">errorMessage</span>
+353:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+354:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+355:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+356:         
+357:         <span class="ruby-identifier">win</span> = <span class="ruby-constant">OpenMirror</span><span class="ruby-operator">::</span><span class="ruby-constant">PopupGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">errorMessage</span>, <span class="ruby-ivar">@@qApp</span>)
+358:         <span class="ruby-identifier">win</span>.<span class="ruby-identifier">show</span>
+359:         
+360:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception</span>
+361:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+362:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot; Erreur : &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">message</span>
+363:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+364:         <span class="ruby-identifier">puts</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>
+365:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;-----------------------------------------------------------------------------&quot;</span>
+366:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;&quot;</span>
+367: 
+368:         <span class="ruby-identifier">errorMessage</span> = <span class="ruby-value str">&quot;Une erreur grave est survenue pendant\n&quot;</span>
+369:                        <span class="ruby-value str">&quot;le chargement de la configuration&quot;</span>
+370:         <span class="ruby-identifier">win</span> = <span class="ruby-constant">OpenMirror</span><span class="ruby-operator">::</span><span class="ruby-constant">PopupGui</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">errorMessage</span>, <span class="ruby-ivar">@@qApp</span>)
+371:         <span class="ruby-identifier">win</span>.<span class="ruby-identifier">show</span>
+372:       <span class="ruby-keyword kw">end</span>
+373:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

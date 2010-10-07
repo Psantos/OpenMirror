@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (OpenMirror::WebAppGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File OpenMirror/gui/WebAppGui.rb, line 58</span>
+58:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>, <span class="ruby-identifier">parent</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">color</span> = <span class="ruby-keyword kw">nil</span>)
+59:       <span class="ruby-ivar">@@qApp</span> = <span class="ruby-identifier">app</span>
+60:       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">parent</span>)
+61:     
+62:       <span class="ruby-comment cmt">#Construction du layout global</span>
+63:       <span class="ruby-identifier">globalLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+64:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">spacing</span> = <span class="ruby-constant">LAYOUT_SPACING</span>
+65:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">margin</span> =  <span class="ruby-constant">GLOBAL_LAYOUT_MARGIN</span>
+66:       <span class="ruby-identifier">setStyleSheet</span>(<span class="ruby-node">&quot;background-color: #{color}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">color</span>.<span class="ruby-identifier">nil?</span>
+67:       
+68:       <span class="ruby-comment cmt">#Création d'un widget browser</span>
+69:       <span class="ruby-identifier">browser</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">TextBrowser</span>.<span class="ruby-identifier">new</span>
+70:       <span class="ruby-identifier">browser</span>.<span class="ruby-identifier">setSizePolicy</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>)
+71:       
+72:       <span class="ruby-comment cmt">#Création de l'url</span>
+73:       <span class="ruby-identifier">url</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Url</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">URL</span>)
+74: 
+75:       <span class="ruby-comment cmt">#Chargement de la page web</span>
+76:       <span class="ruby-identifier">browser</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">WebView</span>.<span class="ruby-identifier">new</span>()
+77:       <span class="ruby-identifier">browser</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">url</span>)
+78:       
+79:       <span class="ruby-comment cmt"># Mise en forme de la vue principale</span>
+80:       <span class="ruby-identifier">setLayout</span>(<span class="ruby-identifier">globalLayout</span>)
+81:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">browser</span>)
+82:        
+83:       <span class="ruby-comment cmt">#Redimensionner à une taille spécifique</span>
+84:       <span class="ruby-identifier">resize</span>(<span class="ruby-constant">MIN_WIDTH</span>, <span class="ruby-constant">MIN_HEIGHT</span>)
+85:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

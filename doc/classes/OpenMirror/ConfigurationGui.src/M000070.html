@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>eventAdd (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 729</span>
+729:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eventAdd</span>()      
+730:       <span class="ruby-comment cmt">#demander à l'utilisateur de saisir le nouveau nom</span>
+731:       <span class="ruby-identifier">eventName</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">InputDialog</span>.<span class="ruby-identifier">getText</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-constant">WINDOW_TITLE</span>, <span class="ruby-constant">EVENT_NAME_ADD</span>)
+732:       
+733:       <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">eventName</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">eventName</span>.<span class="ruby-identifier">empty?</span>)
+734:         <span class="ruby-comment cmt">#indiquer que la configuration à été modifiée</span>
+735:         <span class="ruby-identifier">modified</span>(<span class="ruby-keyword kw">true</span>)
+736:         
+737:         <span class="ruby-comment cmt">#ajouter à la configuration en mémoire</span>
+738:         <span class="ruby-ivar">@@loadedEventsList</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Event</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">eventName</span>, [], [])
+739:        
+740:         <span class="ruby-comment cmt">#ajouter à la vue</span>
+741:         <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidgetItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">eventName</span>)))
+742:         
+743:         <span class="ruby-comment cmt">#Séléctionner nouvel event</span>
+744:         <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span> = <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+745:         
+746:         <span class="ruby-comment cmt">#Enchainement automatique.   </span>
+747:         <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-identifier">question</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EVENT_SEQ_MATCH_ADD</span>), <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">No</span>)
+748:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">answer</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>) <span class="ruby-keyword kw">then</span>
+749:           <span class="ruby-keyword kw">begin</span>
+750:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">matchAdd</span>()
+751:             <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-identifier">question</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EVENT_SEQ_MATCH_ADD_AGAIN</span>), <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">No</span>)
+752:           <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">answer</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>
+753:         <span class="ruby-keyword kw">end</span>
+754: 
+755:         <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-identifier">question</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EVENT_SEQ_ACTION_ADD</span>), <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">No</span>)
+756:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">answer</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>) <span class="ruby-keyword kw">then</span>
+757:           <span class="ruby-keyword kw">begin</span>
+758:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">actionAdd</span>()
+759:             <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-identifier">question</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">WINDOW_TITLE</span>), <span class="ruby-identifier">trUtf8</span>(<span class="ruby-constant">EVENT_SEQ_ACTION_ADD_AGAIN</span>), <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">No</span>)
+760:           <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">answer</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">MessageBox</span><span class="ruby-operator">::</span><span class="ruby-constant">Yes</span>
+761:         <span class="ruby-keyword kw">end</span>
+762:       <span class="ruby-keyword kw">end</span>
+763:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

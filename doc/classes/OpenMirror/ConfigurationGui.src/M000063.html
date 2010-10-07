@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>moveEventDown (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 563</span>
+563:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">moveEventDown</span>()
+564:       <span class="ruby-comment cmt">#Uniquement si un event est séléctionné</span>
+565:       <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">isItemSelected</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentItem</span>)) <span class="ruby-keyword kw">then</span>
+566:         <span class="ruby-identifier">itemRow</span> = <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span>
+567:         <span class="ruby-keyword kw">if</span>((<span class="ruby-identifier">itemRow</span> <span class="ruby-operator">!=</span> <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">and</span> (<span class="ruby-identifier">itemRow</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">0</span>)) <span class="ruby-keyword kw">then</span>
+568:           <span class="ruby-comment cmt">#modifier la configuration en mémoire</span>
+569:           <span class="ruby-ivar">@@loadedEventsList</span>.<span class="ruby-identifier">swap!</span>(<span class="ruby-identifier">itemRow</span>, <span class="ruby-identifier">itemRow</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+570:           
+571:           <span class="ruby-comment cmt">#indiquer que la configuration à été modifiée</span>
+572:           <span class="ruby-identifier">modified</span>(<span class="ruby-keyword kw">true</span>)
+573: 
+574:           <span class="ruby-comment cmt">#modifier la vue</span>
+575:           <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">insertItem</span>(<span class="ruby-identifier">itemRow</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">takeItem</span>(<span class="ruby-identifier">itemRow</span>))
+576:           <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span> = <span class="ruby-identifier">itemRow</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+577:         <span class="ruby-keyword kw">end</span>
+578:       <span class="ruby-keyword kw">end</span>
+579:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

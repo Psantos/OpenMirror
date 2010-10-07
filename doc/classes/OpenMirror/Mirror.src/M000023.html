@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (OpenMirror::Mirror)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/lib/Mirror.rb, line 160</span>
+160:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">device</span>)
+161:       <span class="ruby-comment cmt">#Vefirication de la validite de device</span>
+162:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;#{device.class} invalide, USB::Device requis&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">device</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">USB</span><span class="ruby-operator">::</span><span class="ruby-constant">Device</span> 
+163:       
+164:       <span class="ruby-comment cmt">#Variables relatives au mirror</span>
+165:       <span class="ruby-ivar">@device</span>           = <span class="ruby-identifier">device</span>
+166:       <span class="ruby-ivar">@handle</span>           = <span class="ruby-ivar">@device</span>.<span class="ruby-identifier">open</span>
+167:       <span class="ruby-ivar">@configuration</span>    = <span class="ruby-ivar">@device</span>.<span class="ruby-identifier">configurations</span>.<span class="ruby-identifier">first</span>
+168:       <span class="ruby-ivar">@interface</span>        = <span class="ruby-ivar">@configuration</span>.<span class="ruby-identifier">interfaces</span>.<span class="ruby-identifier">first</span>
+169:       
+170:       <span class="ruby-comment cmt">#En fonction de la plateforme appliquer le bon endpoint      </span>
+171:       <span class="ruby-keyword kw">if</span>(<span class="ruby-constant">PLATFORM</span>.<span class="ruby-identifier">match</span>(<span class="ruby-constant">LINUX_OS_PATTERN</span>)) <span class="ruby-keyword kw">then</span>
+172:         <span class="ruby-ivar">@endpoint</span> = <span class="ruby-ivar">@interface</span>.<span class="ruby-identifier">settings</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">endpoints</span>[<span class="ruby-constant">LINUX_ENDPOINT_POSITION</span>]
+173:         
+174:       <span class="ruby-keyword kw">elsif</span>(<span class="ruby-constant">PLATFORM</span>.<span class="ruby-identifier">match</span>(<span class="ruby-constant">WINDOWS_OS_PATTERN</span>))
+175:         <span class="ruby-ivar">@endpoint</span> = <span class="ruby-ivar">@interface</span>.<span class="ruby-identifier">settings</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">endpoints</span>[<span class="ruby-constant">WINDOWS_ENDPOINT_POSITION</span>]
+176:         
+177:       <span class="ruby-keyword kw">elsif</span>(<span class="ruby-constant">PLATFORM</span>.<span class="ruby-identifier">match</span>(<span class="ruby-constant">OSX_OS_PATTERN</span>))
+178:         <span class="ruby-ivar">@endpoint</span> = <span class="ruby-ivar">@interface</span>.<span class="ruby-identifier">settings</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">endpoints</span>[<span class="ruby-constant">OSX_ENDPOINT_POSITION</span>]
+179:           
+180:       <span class="ruby-keyword kw">else</span>
+181:         <span class="ruby-ivar">@endpoint</span> = <span class="ruby-ivar">@interface</span>.<span class="ruby-identifier">settings</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">endpoints</span>[<span class="ruby-constant">DEFAULT_ENDPOINT_POSITION</span>]
+182:         
+183:       <span class="ruby-keyword kw">end</span>
+184:       
+185:       <span class="ruby-comment cmt">#Variables d'état</span>
+186:       <span class="ruby-ivar">@opened</span>  = <span class="ruby-keyword kw">false</span>
+187:       <span class="ruby-ivar">@claimed</span> = <span class="ruby-keyword kw">false</span>
+188:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

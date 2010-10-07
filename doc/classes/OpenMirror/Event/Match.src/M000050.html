@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (OpenMirror::Event::Match)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File OpenMirror/lib/Event.rb, line 72</span>
+72:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span>)
+73:         
+74:         <span class="ruby-comment cmt">#Vérification de la validité du paramètre field</span>
+75:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;#{field.class} invalide, Symbol requis&quot;</span>,   <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Symbol</span>
+76:       
+77:         <span class="ruby-ivar">@field</span> = <span class="ruby-identifier">field</span>
+78:         <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">value</span>
+79:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

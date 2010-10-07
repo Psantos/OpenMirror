@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>mirrors (OpenMirror::Mirror)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File OpenMirror/lib/Mirror.rb, line 71</span>
+71:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">mirrors</span>
+72:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@listMirrors</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">then</span>
+73:         <span class="ruby-identifier">findMirrors</span>
+74:       <span class="ruby-keyword kw">end</span>
+75:       
+76:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@@listMirrors</span>
+77:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

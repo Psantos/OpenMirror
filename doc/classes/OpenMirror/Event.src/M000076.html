@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>match (OpenMirror::Event)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/lib/Event.rb, line 108</span>
+108:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">parallel</span>=<span class="ruby-keyword kw">true</span>)
+109:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;#{tag.class} invalide, Tag requis&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Tag</span> 
+110:       <span class="ruby-ivar">@@evenList</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">event</span><span class="ruby-operator">|</span>
+111:         
+112:         <span class="ruby-identifier">matching</span> = <span class="ruby-keyword kw">true</span>
+113:         <span class="ruby-identifier">event</span>.<span class="ruby-identifier">matches</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+114:           <span class="ruby-identifier">matching</span> = <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">match</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">tag</span>)
+115:         <span class="ruby-keyword kw">end</span>
+116: 
+117:         <span class="ruby-comment cmt">#Le match est true si tous les matchs correspondent.</span>
+118:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matching</span> <span class="ruby-keyword kw">then</span>
+119:           <span class="ruby-identifier">event</span>.<span class="ruby-identifier">actions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span><span class="ruby-operator">|</span>
+120:             <span class="ruby-identifier">thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> {<span class="ruby-identifier">action</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">tag</span>)}
+121:             
+122:             <span class="ruby-comment cmt">#Exécution séquentielle si false</span>
+123:             <span class="ruby-identifier">thread</span>.<span class="ruby-identifier">join</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">parallel</span>
+124:           <span class="ruby-keyword kw">end</span>
+125:           <span class="ruby-comment cmt"># Une fois toutes les actions executée, annuler la comparaison des autres matchs</span>
+126:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">name</span>
+127:         <span class="ruby-keyword kw">end</span>
+128:       <span class="ruby-keyword kw">end</span>
+129:           
+130:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+131:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

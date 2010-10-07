@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (OpenMirror::CustomDialog)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/CustomDialog.rb, line 71</span>
+ 71:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">params</span>)
+ 72:       <span class="ruby-keyword kw">super</span>()
+ 73:       
+ 74:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;type   #{type} inconnu&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">DIALOG_TYPES</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">type</span>
+ 75:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;params #{params.class} doit être de type Hash&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Hash</span>
+ 76:       <span class="ruby-ivar">@returnValue</span> = <span class="ruby-keyword kw">nil</span>
+ 77:       
+ 78:       <span class="ruby-comment cmt">#Création des layouts du dialogue</span>
+ 79:       <span class="ruby-identifier">globalLayout</span>      = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>      
+ 80:       <span class="ruby-identifier">inputLayout</span>       = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+ 81:       <span class="ruby-identifier">inputInterLayout</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">VBoxLayout</span>.<span class="ruby-identifier">new</span>
+ 82:       <span class="ruby-identifier">inputTitleLayout</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+ 83:       <span class="ruby-identifier">inputCustomLayout</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+ 84:       <span class="ruby-identifier">buttonsLayout</span>     = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">HBoxLayout</span>.<span class="ruby-identifier">new</span>
+ 85:       
+ 86:       <span class="ruby-comment cmt">#Création des icones</span>
+ 87:       <span class="ruby-identifier">imageQuestion</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">CUSTOM_DIALOG_IMAGE</span>)
+ 88:       
+ 89:       <span class="ruby-comment cmt">#Récupération des icones inclus dans Qt</span>
+ 90:       <span class="ruby-identifier">style</span> =  <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Application</span><span class="ruby-operator">::</span><span class="ruby-identifier">style</span>.<span class="ruby-identifier">new</span>()
+ 91:       <span class="ruby-identifier">iconOk</span>= <span class="ruby-identifier">style</span>.<span class="ruby-identifier">standardIcon</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Style</span><span class="ruby-operator">::</span><span class="ruby-constant">PM_DialogButtonsButtonWidth</span>)
+ 92:       <span class="ruby-identifier">iconCancel</span>= <span class="ruby-identifier">style</span>.<span class="ruby-identifier">standardIcon</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Style</span><span class="ruby-operator">::</span><span class="ruby-constant">PM_ExclusiveIndicatorWidth</span>)
+ 93:       
+ 94:       <span class="ruby-comment cmt">#Création du label image</span>
+ 95:       <span class="ruby-identifier">imageLabel</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>
+ 96:       <span class="ruby-identifier">imageLabel</span>.<span class="ruby-identifier">pixmap</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Pixmap</span>.<span class="ruby-identifier">fromImage</span>(<span class="ruby-identifier">imageQuestion</span>)
+ 97:       
+ 98:       <span class="ruby-identifier">imageLabel</span>.<span class="ruby-identifier">backgroundRole</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Palette</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>
+ 99:       <span class="ruby-identifier">imageLabel</span>.<span class="ruby-identifier">setSizePolicy</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>)
+100: 
+101:       <span class="ruby-comment cmt">#Création des boutons</span>
+102:       <span class="ruby-ivar">@okButton</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">iconOk</span>, <span class="ruby-constant">OK_BUTTON_TEXT</span>)
+103:       <span class="ruby-ivar">@okButton</span>.<span class="ruby-identifier">setAutoDefault</span>(<span class="ruby-keyword kw">true</span>)
+104:       <span class="ruby-ivar">@okButton</span>.<span class="ruby-identifier">setDefault</span>(<span class="ruby-keyword kw">true</span>)
+105:       <span class="ruby-ivar">@okButton</span>.<span class="ruby-identifier">setSizePolicy</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>)
+106:       
+107:       <span class="ruby-ivar">@cancelButton</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">PushButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">iconCancel</span>, <span class="ruby-constant">CANCEL_BUTTON_TEXT</span>)
+108:       <span class="ruby-ivar">@cancelButton</span>.<span class="ruby-identifier">setSizePolicy</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>)
+109:       
+110:       <span class="ruby-comment cmt">#Création des spacers</span>
+111:       <span class="ruby-identifier">buttonSpacerRight</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SpacerItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">20</span>, <span class="ruby-value">40</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>)
+112:       <span class="ruby-identifier">buttonSpacerLeft</span>  = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SpacerItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">20</span>, <span class="ruby-value">40</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Expanding</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Minimum</span>)
+113: 
+114:       <span class="ruby-comment cmt">#Construction du dialogue</span>
+115:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">setMargin</span>(<span class="ruby-constant">GLOBAL_LAYOUT_MARGIN</span>)
+116:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">setSpacing</span>(<span class="ruby-constant">GLOBAL_LAYOUT_SPACING</span>)
+117:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">inputLayout</span>)
+118:       <span class="ruby-identifier">globalLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">buttonsLayout</span>)
+119:       
+120:       <span class="ruby-identifier">inputLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">imageLabel</span>)
+121:       <span class="ruby-identifier">inputLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">inputInterLayout</span>)
+122:       
+123:       <span class="ruby-identifier">inputInterLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">inputTitleLayout</span>)
+124:       <span class="ruby-identifier">inputInterLayout</span>.<span class="ruby-identifier">addLayout</span>(<span class="ruby-identifier">inputCustomLayout</span>)
+125: 
+126:       <span class="ruby-identifier">buttonsLayout</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-identifier">buttonSpacerLeft</span>)
+127:       <span class="ruby-identifier">buttonsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-ivar">@okButton</span>)
+128:       <span class="ruby-identifier">buttonsLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-ivar">@cancelButton</span>)
+129:       <span class="ruby-identifier">buttonsLayout</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-identifier">buttonSpacerRight</span>)
+130:      
+131:       <span class="ruby-identifier">setLayout</span>(<span class="ruby-identifier">globalLayout</span>) 
+132:    
+133:       
+134:       <span class="ruby-comment cmt">#Customisation du dialogue</span>
+135:       
+136:       <span class="ruby-identifier">setWindowTitle</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:title</span>])) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:title</span>]
+137:       
+138:       <span class="ruby-identifier">titleLabel</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:text</span>]))
+139:       <span class="ruby-identifier">inputTitleLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">titleLabel</span>)
+140:   
+141:       <span class="ruby-comment cmt">#valeur de retour = valeur par défaut si saisie</span>
+142:       <span class="ruby-ivar">@returnValue</span> = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:defaultValue</span>])
+143:       
+144:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">type</span>
+145:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">DIALOG_TYPES</span>[<span class="ruby-identifier">:LINE_EDIT</span>]
+146:           <span class="ruby-comment cmt">#Création d'un Line edit </span>
+147:           <span class="ruby-identifier">lineEdit</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">LineEdit</span>.<span class="ruby-identifier">new</span>()
+148:           <span class="ruby-identifier">lineEdit</span>.<span class="ruby-identifier">text</span> = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:defaultValue</span>])
+149:           <span class="ruby-identifier">inputCustomLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">lineEdit</span>)
+150:           
+151:           <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">lineEdit</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">&quot;textChanged(const QString&amp;)&quot;</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'valueChanged(const QString&amp;)'</span>))
+152:         
+153:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">DIALOG_TYPES</span>[<span class="ruby-identifier">:LINE_EDIT_REGEX</span>]
+154:           <span class="ruby-comment cmt">#Création d'un Line edit et de labels décoratifs</span>
+155:           <span class="ruby-ivar">@lineEditRegEx</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">LineEdit</span>.<span class="ruby-identifier">new</span>()
+156:           <span class="ruby-identifier">regExCharLeft</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">REG_EX_CHAR_LEFT</span>)
+157:           <span class="ruby-identifier">regExCharLeft</span>.<span class="ruby-identifier">setSizePolicy</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>)
+158:           <span class="ruby-identifier">regExCharRight</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">REG_EX_CHAR_RIGHT</span>)
+159:           <span class="ruby-identifier">regExCharRight</span>.<span class="ruby-identifier">setSizePolicy</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>, <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">SizePolicy</span><span class="ruby-operator">::</span><span class="ruby-constant">Maximum</span>)
+160:           
+161:           <span class="ruby-ivar">@lineEditRegEx</span>.<span class="ruby-identifier">text</span> = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:defaultValue</span>])
+162:           
+163:           <span class="ruby-identifier">inputCustomLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">regExCharLeft</span>)
+164:           <span class="ruby-identifier">inputCustomLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-ivar">@lineEditRegEx</span>)
+165:           <span class="ruby-identifier">inputCustomLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">regExCharRight</span>)
+166:           
+167:           <span class="ruby-identifier">connect</span>(<span class="ruby-ivar">@lineEditRegEx</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">&quot;textChanged(const QString&amp;)&quot;</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'valueChanged(const QString&amp;)'</span>))
+168:           <span class="ruby-identifier">connect</span>(<span class="ruby-ivar">@lineEditRegEx</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">&quot;textChanged(const QString&amp;)&quot;</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'checkRegexp(const QString&amp;)'</span>))
+169:           
+170:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">DIALOG_TYPES</span>[<span class="ruby-identifier">:COMBOBOX</span>]          
+171:           <span class="ruby-identifier">comboBox</span> = <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ComboBox</span>.<span class="ruby-identifier">new</span>
+172:           <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-identifier">:values</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">then</span>
+173:   
+174:             <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+175:             <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:values</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+176:                <span class="ruby-identifier">comboBox</span>.<span class="ruby-identifier">insertItem</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">item</span>))
+177:                <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+178:             <span class="ruby-keyword kw">end</span>
+179:             
+180:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:defaultValue</span>].<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Integer</span> <span class="ruby-keyword kw">then</span>
+181:               <span class="ruby-identifier">comboBox</span>.<span class="ruby-identifier">currentIndex</span> = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:defaultValue</span>])
+182:               <span class="ruby-comment cmt">#mise à jour de la valeur par défaut de retour</span>
+183:               <span class="ruby-ivar">@returnValue</span> = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:values</span>][<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:defaultValue</span>]])
+184:             <span class="ruby-keyword kw">else</span>
+185:               <span class="ruby-ivar">@returnValue</span> = <span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:values</span>].<span class="ruby-identifier">first</span>)
+186:             <span class="ruby-keyword kw">end</span>
+187:           <span class="ruby-keyword kw">end</span>
+188:           
+189:           <span class="ruby-identifier">inputCustomLayout</span>.<span class="ruby-identifier">addWidget</span>(<span class="ruby-identifier">comboBox</span>)
+190:         
+191:           <span class="ruby-identifier">connect</span>(<span class="ruby-identifier">comboBox</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">&quot;currentIndexChanged(const QString&amp;)&quot;</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'valueChanged(const QString&amp;)'</span>))
+192:       <span class="ruby-keyword kw">end</span>
+193:       
+194:       <span class="ruby-comment cmt">#empecher le redimensionnement</span>
+195:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">layout</span>.<span class="ruby-identifier">setSizeConstraint</span>( <span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">Layout</span><span class="ruby-operator">::</span><span class="ruby-constant">SetFixedSize</span> )      
+196:       
+197:       <span class="ruby-comment cmt">#Connexion des boutons ok et annuler</span>
+198:       <span class="ruby-identifier">connect</span>( <span class="ruby-ivar">@okButton</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'accept()'</span>) )
+199:       <span class="ruby-identifier">connect</span>( <span class="ruby-ivar">@cancelButton</span>, <span class="ruby-constant">SIGNAL</span>(<span class="ruby-value str">'clicked()'</span>), <span class="ruby-keyword kw">self</span>, <span class="ruby-constant">SLOT</span>(<span class="ruby-value str">'reject()'</span>) )
+200:       
+201:       <span class="ruby-comment cmt">#afficher le dialogue</span>
+202:       <span class="ruby-identifier">exec</span>
+203:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>showDetails (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 491</span>
+491:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">showDetails</span>(<span class="ruby-identifier">item</span>)
+492:       <span class="ruby-comment cmt">#effacer les vues de droite</span>
+493:       <span class="ruby-ivar">@eventMatchesList</span>.<span class="ruby-identifier">clear</span>
+494:       <span class="ruby-ivar">@eventActionsList</span>.<span class="ruby-identifier">clear</span>
+495: 
+496:       <span class="ruby-comment cmt">#afficher les details pour un item valide</span>
+497:       <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">item</span>.<span class="ruby-identifier">nil?</span>) 
+498:         <span class="ruby-comment cmt">#Afficher le nom de l'event</span>
+499:         <span class="ruby-ivar">@eventNameLabel</span>.<span class="ruby-identifier">text</span> = <span class="ruby-identifier">item</span>.<span class="ruby-identifier">text</span>.<span class="ruby-identifier">to_s</span>
+500:         
+501:         <span class="ruby-comment cmt">#Peupler les matches de l'event</span>
+502:         <span class="ruby-ivar">@@loadedEventsList</span>[<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span>].<span class="ruby-identifier">matches</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+503:           <span class="ruby-ivar">@eventMatchesList</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidgetItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-identifier">match</span>.<span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; \t=&gt; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">match</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span>)))
+504:         <span class="ruby-keyword kw">end</span>
+505:       
+506:         <span class="ruby-comment cmt">#Peupler les actions de l'event</span>
+507:         <span class="ruby-ivar">@@loadedEventsList</span>[<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span>].<span class="ruby-identifier">actions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span><span class="ruby-operator">|</span>
+508:           <span class="ruby-ivar">@eventActionsList</span>.<span class="ruby-identifier">addItem</span>(<span class="ruby-constant">Qt</span><span class="ruby-operator">::</span><span class="ruby-constant">ListWidgetItem</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trUtf8</span>(<span class="ruby-value str">'['</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">action</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;OpenMirror::Action::&quot;</span>,<span class="ruby-value str">''</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">'] : '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">action</span>.<span class="ruby-identifier">to_s</span> )))
+509:         <span class="ruby-keyword kw">end</span> 
+510:       <span class="ruby-keyword kw">end</span>
+511:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

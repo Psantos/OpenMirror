@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>editEventName (OpenMirror::ConfigurationGui)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File OpenMirror/gui/ConfigurationGui.rb, line 582</span>
+582:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">editEventName</span>()
+583:       
+584:       <span class="ruby-comment cmt">#Si un élément est selectionné</span>
+585:       <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">isItemSelected</span>(<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentItem</span>)) <span class="ruby-keyword kw">then</span>
+586:         <span class="ruby-comment cmt">#demander à l'utilisateur de saisir le nouveau nom</span>
+587:         <span class="ruby-identifier">eventName</span> = <span class="ruby-constant">CustomDialog</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:LINE_EDIT</span>, {<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">WINDOW_TITLE</span>,  <span class="ruby-identifier">:text</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">EVENT_NAME_EDIT_TEXT</span>, <span class="ruby-identifier">:defaultValue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@@loadedEventsList</span>[<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span>].<span class="ruby-identifier">name</span>}).<span class="ruby-identifier">value</span>
+588:          
+589:         <span class="ruby-keyword kw">if</span>(<span class="ruby-operator">!</span><span class="ruby-identifier">eventName</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">eventName</span>.<span class="ruby-identifier">empty?</span>)
+590:           <span class="ruby-comment cmt">#indiquer que la configuration à été modifiée</span>
+591:           <span class="ruby-identifier">modified</span>(<span class="ruby-keyword kw">true</span>)
+592:           
+593:           <span class="ruby-comment cmt">#modifier l'event concerné</span>
+594:           <span class="ruby-ivar">@@loadedEventsList</span>[<span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentRow</span>].<span class="ruby-identifier">name</span> = <span class="ruby-identifier">eventName</span>
+595:           
+596:           <span class="ruby-comment cmt">#mettre à jour la vue</span>
+597:           <span class="ruby-ivar">@eventList</span>.<span class="ruby-identifier">currentItem</span>.<span class="ruby-identifier">text</span> = <span class="ruby-identifier">eventName</span>
+598:           <span class="ruby-ivar">@eventNameLabel</span>.<span class="ruby-identifier">text</span> = <span class="ruby-identifier">eventName</span>
+599:         <span class="ruby-keyword kw">end</span>
+600:       <span class="ruby-keyword kw">end</span>
+601:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

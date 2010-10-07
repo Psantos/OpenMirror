@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (OpenMirror::Tag)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File OpenMirror/lib/Tag.rb, line 54</span>
+54:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">action</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">data</span>)
+55:       
+56:       <span class="ruby-comment cmt">#Vérification de la validité de command</span>
+57:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">command</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Symbol</span>) <span class="ruby-keyword kw">then</span>
+58:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Commande #{command} inconnue&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">COMMAND</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">command</span>
+59:       <span class="ruby-keyword kw">else</span>
+60:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Commande #{command} inconnue&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">COMMAND</span>.<span class="ruby-identifier">has_value?</span> <span class="ruby-identifier">command</span>
+61:       <span class="ruby-keyword kw">end</span>
+62:       
+63:       <span class="ruby-comment cmt">#Vérification de la validité de actions</span>
+64:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">command</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Symbol</span>) <span class="ruby-keyword kw">then</span>
+65:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Action #{action} inconnue&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">ACTION</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">action</span>
+66:       <span class="ruby-keyword kw">else</span>
+67:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Action #{action} inconnue&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">ACTION</span>.<span class="ruby-identifier">has_value?</span> <span class="ruby-identifier">action</span>
+68:       <span class="ruby-keyword kw">end</span>
+69:           
+70:       <span class="ruby-comment cmt">#Vérification de la validité de l'id</span>
+71:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;#{id.class} invalide, String requis&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">id</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span> 
+72:           
+73:       <span class="ruby-comment cmt">#Vérification de la validité de l'data</span>
+74:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;#{data.class}  invalide, String requis&quot;</span>, <span class="ruby-identifier">caller</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
+75: 
+76:       <span class="ruby-ivar">@command</span>  = <span class="ruby-identifier">command</span>
+77:       <span class="ruby-ivar">@action</span>   = <span class="ruby-identifier">action</span>
+78:       <span class="ruby-ivar">@id</span>       = <span class="ruby-identifier">id</span>
+79:       <span class="ruby-ivar">@data</span>     = <span class="ruby-identifier">data</span>
+80:       <span class="ruby-ivar">@time</span>     = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+81:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

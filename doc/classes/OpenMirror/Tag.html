@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: OpenMirror::Tag</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">OpenMirror::Tag</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/OpenMirror/lib/Tag_rb.html">
+                OpenMirror/lib/Tag.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+    <div id="diagram">
+      <map id="map" name="map">
+  <area shape="rect" coords="632,5,715,53"      href="../Qt/Widget.html" alt="Qt::Widget" />
+  <area shape="rect" coords="680,101,779,149"      href="SimulationGui.html" alt="SimulationGui" />
+  <area shape="rect" coords="579,101,656,149"      href="GlobalGui.html" alt="GlobalGui" />
+  <area shape="rect" coords="437,101,555,149"      href="ConfigurationGui.html" alt="ConfigurationGui" />
+  <area shape="rect" coords="803,101,893,149"      href="WebAppGui.html" alt="WebAppGui" />
+  <area shape="rect" coords="928,5,1005,53"      href="../Qt/Dialog.html" alt="Qt::Dialog" />
+  <area shape="rect" coords="917,101,1016,149"      href="CustomDialog.html" alt="CustomDialog" />
+  <area shape="rect" coords="1040,5,1117,53"      href="../Qt/Frame.html" alt="Qt::Frame" />
+  <area shape="rect" coords="1040,101,1117,149"      href="PopupGui.html" alt="PopupGui" />
+  <area shape="rect" coords="315,101,387,149"      href="Mirror.html" alt="Mirror" />
+  <area shape="rect" coords="219,101,291,149"      href="Action.html" alt="Action" />
+  <area shape="rect" coords="123,101,195,149"      href="Tag.html" alt="Tag" />
+  <area shape="rect" coords="27,101,99,149"      href="Event.html" alt="Event" />
+  <area shape="rect" coords="16,67,1128,160"      href="../OpenMirror.html" alt="OpenMirror" />
+</map>
+<img src="../../dot/m_6_0.png" usemap="#map" border="0" alt="dot/m_6_0.png">
+    </div>
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000040">new</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMMAND</td>
+          <td>=</td>
+          <td class="context-item-value">{                 :COMMAND_NULL           =&gt; '00',                 :COMMAND_ONOFF          =&gt; '01',                 :COMMAND_READ           =&gt; '02'</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Constantes des commandes
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ACTION</td>
+          <td>=</td>
+          <td class="context-item-value">{                 :ACTION_NULL            =&gt; '00',                 :ACTION_TAG_ON          =&gt; '01',                 :ACTION_TAG_OFF         =&gt; '02',                 :ACTION_MIRROR_ON       =&gt; '04',                 :ACTION_MIRROR_OFF      =&gt; '05'</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Constantes des actions
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">action</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">command</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">data</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">id</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">time</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="Tag.src/M000040.html" target="Code" class="method-signature"
+            onclick="popupCode('Tag.src/M000040.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(command, action, id, data)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Constructeur
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
